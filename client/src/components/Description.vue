@@ -3,20 +3,10 @@
     <h2>Наш автомоечный комплекс - это</h2>
     <div class="border"></div>
     <div class="description-container">
-      <div class="description-container-type">
-        <img src="@/assets/001-car.png" />
-        <h4>АВТОМОЙКА</h4>
-        <p>Мы предоставляем весь стандартный комплекс услуг, необходимых для достижения чистоты автомобилей любого класса.</p>
-      </div>
-      <div class="description-container-type">
-        <img src="@/assets/003-tools-and-utensils.png" />
-        <h4>ДЕТЕЙЛИНГ</h4>
-        <p>Современный, профессиональный детейлинг включает в себя восстановление ЛКП,нанесение защитных покрытий ,антигравийная пленка,полировка и т.п.</p>
-      </div>
-      <div class="description-container-type">
-        <img src="@/assets/006-racing-flag.png" />
-        <h4>ШИНОМОНТАЖ</h4>
-        <p>Шиномонтаж выполняется квалифицированными специалистами на оборудовании,которое предотвращает повреждения диска автомобиля.</p>
+      <div v-for="description in descriptions" :key="description.id" class="description-container-type">
+        <img :src="setImage(description)" />
+        <h4>{{description.title}}</h4>
+        <p>{{description.text}}</p>
       </div>
     </div>
     <router-link to="/prices" class="details">Узнать подробнее</router-link>
@@ -24,7 +14,32 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      descriptions: [
+        { 
+          title: 'АВТОМОЙКА',
+          text: 'Мы предоставляем весь стандартный комплекс услуг, необходимых для достижения чистоты автомобилей любого класса.',
+          image: '001-car.png'
+        },
+        { title: 'ДЕТЕЙЛИНГ',
+          text: 'Современный, профессиональный детейлинг включает в себя восстановление ЛКП,нанесение защитных покрытий ,антигравийная пленка,полировка и т.п.',
+          image: '003-tools-and-utensils.png'
+        },
+        { title: 'ШИНОМОНТАЖ',
+          text: 'Шиномонтаж выполняется квалифицированными специалистами на оборудовании,которое предотвращает повреждения диска автомобиля.',
+          image: '006-racing-flag.png'
+        },
+      ]
+    }
+  },
+  methods: {
+    setImage(block) {
+      return `/static/img/${block.image}`
+    }
+  }
+};
 </script>
 
 <style>
@@ -56,15 +71,8 @@ h4 {
 }
 
 .description-container {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -ms-flex-flow: row wrap;
   flex-flow: row wrap;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
   justify-content: space-between;
   padding: 40px 60px;
 }
@@ -116,9 +124,8 @@ h4 {
   display: block;
   margin: auto;
   border: 2px solid #0057ff;
-  -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  font-family: Ubuntu;
+  font-family: Ubuntu, Helvetica, sans-serif, Arial;
   font-style: normal;
   font-weight: 300;
   font-size: 18px;
@@ -131,8 +138,6 @@ h4 {
 
 @media screen and (max-width: 1200px) {
   .description-container {
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
     justify-content: center;
   }
 }
@@ -148,7 +153,7 @@ h4 {
 @media screen and (max-width: 425px) {
   .details {
     font-size: 14px;
-    width: 30%;
+    width: 50%;
   }
 }
 

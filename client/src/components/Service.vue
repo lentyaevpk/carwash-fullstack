@@ -3,58 +3,64 @@
     <h2>Услуги автомойки</h2>
     <div class="border"></div>
     <div class="service-types">
-      <div class="type-container">
-        <img src="@/assets/Intersect.png" />
-        <div>Мойка кузова</div>
-      </div>
-      <div class="type-container">
-        <img src="@/assets/Intersect2.png" />
-        <div>Доп. услуги</div>
-      </div>
-      <div class="type-container">
-        <img src="@/assets/Intersect3.png" />
-        <div>Защ. покрытие</div>
-      </div>
-      <div class="type-container">
-        <img src="@/assets/Intersect4.png" />
-        <div>Шиномонтаж</div>
-      </div>
-      <div class="type-container">
-        <img src="@/assets/Intersect5.png" />
-        <div>Химчистка</div>
-      </div>
-      <div class="type-container">
-        <img src="@/assets/Intersect6.png" />
-        <div>Полировка</div>
-      </div>
-      <div class="type-container">
-        <img src="@/assets/Intersect7.png" />
-        <div>Химчистка ковров</div>
-      </div>
-      <div class="type-container">
-        <img src="@/assets/Intersect8.png" />
-        <div>Антигр. пленка</div>
+      <div v-for="service in services" :key="service.id" class="type-container">
+        <img :src="setImage(service)" class="service-icon"/>
+        <div>{{service.text}}</div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      services: [
+        {
+          text: 'Мойка кузова',
+          image: 'Intersect.png'
+        },
+        {
+          text: 'Доп. услуги',
+          image: 'Intersect2.png'
+        },
+        {
+          text: 'Защ. покрытие',
+          image: 'Intersect3.png'
+        },
+        {
+          text: 'Шиномонтаж',
+          image: 'Intersect4.png'
+        },
+        {
+          text: 'Химчистка',
+          image: 'Intersect5.png'
+        },
+        {
+          text: 'Полировка',
+          image: 'Intersect6.png'
+        },
+        {
+          text: 'Химчистка ковров',
+          image: 'Intersect7.png'
+        },
+        {
+          text: 'Антигр. пленка',
+          image: 'Intersect8.png'
+        }
+      ]
+    }
+  },
+  methods: {
+    setImage(block) {
+      return `/static/img/${block.image}`
+    }
+  }
+};
 </script>
 
 <style scoped>
 .service {
-  background: -webkit-gradient(
-      linear,
-      left top,
-      left bottom,
-      from(#001d55),
-      to(rgba(255, 255, 255, 0))
-    ),
-    #0075ff;
-  background: -o-linear-gradient(top, #001d55 0%, rgba(255, 255, 255, 0) 100%),
-    #0075ff;
   background: linear-gradient(180deg, #001d55 0%, rgba(255, 255, 255, 0) 100%),
     #0075ff;
 }
@@ -71,20 +77,16 @@ export default {};
 .service-types {
   margin: 20px 100px;
   padding: 20px;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -ms-flex-flow: row wrap;
   flex-flow: row wrap;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
 .type-container {
-  margin: 30px;
+  display: flex;
+  flex-flow: column nowrap;
+  flex-basis: 25%;
+  margin: 30px 0;
 }
 
 .type-container div {
@@ -97,6 +99,10 @@ export default {};
   letter-spacing: 0.02em;
   text-transform: capitalize;
   color: #d8d8d8;
+}
+
+.service-icon {
+  margin: auto;
 }
 
 @media screen and (max-width: 1200px) {

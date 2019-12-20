@@ -21,41 +21,22 @@ export default {
 .header {
   width: 100%;
   height: 700px;
-  background: -webkit-gradient(
-      linear,
-      left top,
-      left bottom,
-      from(rgba(0, 0, 0, 0.51)),
-      to(rgba(0, 0, 0, 0))
-    ),
-    url(C:/vue-projects/carwash/src/assets/Preview.png);
-  background: -o-linear-gradient(
-      top,
-      rgba(0, 0, 0, 0.51) 0%,
-      rgba(0, 0, 0, 0) 100%
-    ),
-    url(C:/vue-projects/carwash/src/assets/Preview.png);
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background: linear-gradient(
       180deg,
       rgba(0, 0, 0, 0.51) 0%,
       rgba(0, 0, 0, 0) 100%
     ),
-    url(C:/vue-projects/carwash/src/assets/Preview.png);
+    url(../assets/Preview.png);
   background-size: cover;
   background-repeat: no-repeat;
 }
 
 .header-titles {
-  padding: 200px 0;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-flow: column;
   flex-flow: column;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
   justify-content: center;
 }
 

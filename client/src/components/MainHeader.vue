@@ -1,21 +1,16 @@
 <template>
   <div>
     <img class="menu-button" src="@/assets/menu2.png" @click="toggleMenu" />
-    <div class="header-menu">
-      <a class="header-menu-contacts">
+    <div :class="['header-menu', {'white': isMenuWhite}]" ref="headerMenu">
+      <a :class="['contacts', {'black-titles': isMenuWhite}]">
         <img src="@/assets/location.png" />ул.Бр.Сорокиных 3
       </a>
-      <router-link to="/" class="header-menu-nav pressed">Главная</router-link>
-      <router-link to="/about" class="header-menu-nav">О нас</router-link>
-      <router-link to="/prices" class="header-menu-nav">Цены</router-link>
-      <router-link to="/feedback" class="header-menu-nav">Отзывы</router-link>
-      <router-link to="/works" class="header-menu-nav">Работы</router-link>
-      <router-link to="/login" class="header-menu-nav">Войти</router-link>
-      <a class="header-menu-contacts">
+      <router-link v-for="button in navButtons" :key="button.id" :to="button.to" :class="['header-menu-nav', {'black-titles': isMenuWhite}]">{{button.text}}</router-link>
+      <a :class="['contacts', {'black-titles': isMenuWhite}]">
         <img src="@/assets/time.png" />+7 927 548 1406
       </a>
     </div>
-    <div class="shadow"></div>
+    <div class="shadow" ref="shadow"></div>
   </div>
 </template>
 
@@ -23,34 +18,22 @@
 export default {
   data() {
     return {
-      isShown: false
+      isShown: false,
+      navButtons: [
+        { to: '/', text: 'Главная' },
+        { to: '/about', text: 'О нас' },
+        { to: '/prices', text: 'Цены' },
+        { to: '/feedback', text: 'Отзывы' },
+        { to: '/works', text: 'Работы' },
+        { to: '/login', text: 'Войти' },
+      ],
+      isMenuWhite: false
     };
   },
   methods: {
     // Метод для изменения цвета меню на главной странице при прокрутке
     scrollingNav() {
-      document.documentElement.scrollTop
-        ? document.querySelector(".header-menu").classList.add("white-header")
-        : document
-            .querySelector(".header-menu")
-            .classList.remove("white-header");
-      let menuButtons = document.querySelectorAll(".header-menu-nav");
-      let menuContacts = document.querySelectorAll(".header-menu-contacts");
-      if (document.documentElement.scrollTop) {
-        menuButtons.forEach(a => {
-          a.classList.add("black-titles");
-        });
-        menuContacts.forEach(a => {
-          a.classList.add("black-titles");
-        });
-      } else {
-        menuButtons.forEach(a => {
-          a.classList.remove("black-titles");
-        });
-        menuContacts.forEach(a => {
-          a.classList.remove("black-titles");
-        });
-      }
+      this.isMenuWhite = document.documentElement.scrollTop ? true : false
     },
     watchResize() {
       let menu = document.querySelector(".header-menu");
@@ -63,8 +46,8 @@ export default {
 
     // Выпадающее меню для мобильных версий
     toggleMenu() {
-      let menu = document.querySelector(".header-menu");
-      let shadowOverlay = document.querySelector(".shadow");
+      let menu = this.$refs.headerMenu;
+      let shadowOverlay = this.$refs.shadow;
       if (this.isShown) {
         menu.style.left = "-50%";
         shadowOverlay.classList.toggle("overlay");
@@ -79,9 +62,6 @@ export default {
     window.addEventListener("scroll", this.scrollingNav);
     window.addEventListener("resize", this.watchResize);
   }
-  // updated() {
-  // 	this.isShown = false
-  // }
 };
 </script>
 
@@ -89,34 +69,19 @@ export default {
 .header-menu {
   width: 100%;
   position: fixed;
-  display: -webkit-box;
-  display: -ms-flexbox;
+  left: 0;
+  top: 0;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -ms-flex-flow: row wrap;
   flex-flow: row wrap;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
   justify-content: center;
-  -webkit-transition: 0.3s;
-  -o-transition: 0.3s;
   transition: 0.3s;
-  -webkit-transform: 1s;
-  -ms-transform: 1s;
   transform: 1s;
 }
 
 .header-menu-nav {
   height: 70px;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
   align-items: center;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
   justify-content: center;
   width: 10%;
   text-decoration: none;
@@ -130,22 +95,14 @@ export default {
   cursor: pointer;
 }
 
-.white-header {
+.white {
   background: white;
-  -webkit-transition: 0.5s;
-  -o-transition: 0.5s;
   transition: 0.5s;
 }
 
-.header-menu-contacts {
-  display: -webkit-box;
-  display: -ms-flexbox;
+.contacts {
   display: flex;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
   justify-content: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
   align-items: center;
   height: 70px;
   width: 20%;
@@ -162,21 +119,7 @@ export default {
   text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
 }
 
-.pressed {
-  background: -webkit-gradient(
-      linear,
-      left top,
-      left bottom,
-      from(rgba(13, 52, 255, 0.52)),
-      to(rgba(255, 255, 255, 0))
-    ),
-    #00b2ff;
-  background: -o-linear-gradient(
-      top,
-      rgba(13, 52, 255, 0.52) 0%,
-      rgba(255, 255, 255, 0) 100%
-    ),
-    #00b2ff;
+.router-link-exact-active {
   background: linear-gradient(
       180deg,
       rgba(13, 52, 255, 0.52) 0%,
@@ -186,25 +129,11 @@ export default {
   color: #ebebeb;
 }
 
-.header-menu-contacts img {
+.contacts img {
   margin: 0px 15px;
 }
 
 .header-menu-nav:hover {
-  background: -webkit-gradient(
-      linear,
-      left top,
-      left bottom,
-      from(rgba(13, 52, 255, 0.52)),
-      to(rgba(255, 255, 255, 0))
-    ),
-    #00b2ff;
-  background: -o-linear-gradient(
-      top,
-      rgba(13, 52, 255, 0.52) 0%,
-      rgba(255, 255, 255, 0) 100%
-    ),
-    #00b2ff;
   background: linear-gradient(
       180deg,
       rgba(13, 52, 255, 0.52) 0%,
@@ -219,13 +148,13 @@ export default {
 }
 
 @media screen and (max-width: 1024px) {
-  .header-menu-contacts {
+  .contacts {
     font-size: 14px;
   }
 }
 
 @media screen and (max-width: 768px) {
-  .header-menu-contacts {
+  .contacts {
     height: 50px;
     font-size: 12px;
   }
@@ -235,7 +164,7 @@ export default {
     font-size: 12px;
   }
 
-  .header-menu-contacts img {
+  .contacts img {
     margin: 0;
   }
 }
@@ -243,12 +172,7 @@ export default {
 @media screen and (max-width: 600px) {
   .header-menu {
     padding-top: 60px;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -ms-flex-flow: column;
     flex-flow: column;
-    -webkit-box-pack: start;
-    -ms-flex-pack: start;
     justify-content: flex-start;
     width: 50%;
     height: 100%;
@@ -257,9 +181,7 @@ export default {
     z-index: 1;
   }
 
-  .header-menu-contacts {
-    -webkit-box-ordinal-group: 2;
-    -ms-flex-order: 1;
+  .contacts {
     order: 1;
     width: 100%;
     color: white;
@@ -273,6 +195,8 @@ export default {
   .menu-button {
     display: block;
     position: fixed;
+    top: 0;
+    left: 0;
     padding: 5px;
     background: rgb(29, 27, 27);
     cursor: pointer;
@@ -284,15 +208,15 @@ export default {
     height: 100%;
     background: rgba(0, 0, 0, 0.83);
     opacity: 1;
-    -webkit-transition: 0.5s ease;
-    -o-transition: 0.5s ease;
     transition: 0.5s ease;
     position: fixed;
+    top: 0;
+    left: 0;
   }
 }
 
 @media screen and (max-width: 500px) {
-  .header-menu-contacts {
+  .contacts {
     margin: 0px;
   }
 }

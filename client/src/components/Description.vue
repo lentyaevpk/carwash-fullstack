@@ -2,13 +2,15 @@
   <div class="description">
     <h2>Наш автомоечный комплекс - это</h2>
     <div class="border"></div>
-    <div class="description-container">
-      <div v-for="description in descriptions" :key="description.id" class="description-container-type">
-        <img :src="setImage(description)" />
-        <h4>{{description.title}}</h4>
-        <p>{{description.text}}</p>
+    <transition appear name="appear">
+      <div class="description-container" v-show="show" ref="description">
+        <div v-for="description in descriptions" :key="description.id" class="description-container-type">
+          <img :src="setImage(description)" />
+          <h4>{{description.title}}</h4>
+          <p>{{description.text}}</p>
+        </div>
       </div>
-    </div>
+    </transition>  
     <router-link to="/prices" class="details">Узнать подробнее</router-link>
   </div>
 </template>
@@ -17,6 +19,7 @@
 export default {
   data() {
     return {
+      show: false,
       descriptions: [
         { 
           title: 'АВТОМОЙКА',
@@ -34,15 +37,38 @@ export default {
       ]
     }
   },
+  mounted() {
+    window.addEventListener('scroll', this.showContent());
+  },
   methods: {
     setImage(block) {
       return `/static/img/${block.image}`
+    },
+    showContent() {
+      let elemCoordinats = document.documentElement.getElementsByClassName('description-container')[0].getBoundingClientRect();
+      let top = elemCoordinats.top;
+      let bottom = elemCoordinats.bottom;
+      // let height = elemCoordinats.height;
+      if((top >= 0) && (bottom <= window.innerHeight)) {
+        this.show = true;
+      }
     }
   }
 };
 </script>
 
 <style>
+.appear-enter-active {
+  transition: all 1s ease;
+}
+.appear-leave-active {
+  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.appear-enter, .appear-leave-to {
+  opacity: 0;
+  transform: translateX(-20px);
+}
+
 h2 {
   text-align: center;
   font-family: Roboto, Ubuntu, Helvetica, sans-serif, Arial;

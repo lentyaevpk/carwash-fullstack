@@ -1,10 +1,12 @@
 <template>
   <div class="header">
     <MainHeader />
-    <div class="header-titles">
-      <div class="header-maintitle">Автомойка на Партизанской</div>
-      <div class="header-subtitle">верни новый вид своей машине</div>
-    </div>
+    <transition appear name="fade">
+      <div class="header-titles">
+        <div class="header-maintitle">Автомойка на Партизанской</div>
+        <div class="header-subtitle">верни новый вид своей машине</div>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -13,11 +15,26 @@ import MainHeader from "@/components/MainHeader.vue";
 export default {
   components: {
     MainHeader
+  },
+  data() {
+    return {
+    }
   }
 };
 </script>
 
 <style scoped>
+.fade-enter-active {
+  transition: all .3s ease;
+}
+.fade-leave-active {
+  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+  transform: translateX(20px);
+}
+
 .header {
   width: 100%;
   height: 700px;

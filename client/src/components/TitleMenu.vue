@@ -49,6 +49,7 @@ export default {
     url(../assets/Preview.png);
   background-size: cover;
   background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 .header-titles {

@@ -3,7 +3,8 @@
     <h2>Бонусная программа</h2>
     <div class="border"></div>
     <p
-      class="bonus-description"
+      class="bonus-description hidden hidden-right"
+      v-infocus="'showElement'"
     >Дорогие друзья, мы с Вами уже 15 лет! И поэтому рады сообщить Вам, что совсем скоро состоится запуск новой Бонусной программы. Теперь за каждую услугу, которой Вы воспользуетесь у нас, Вам будут начисляться бонусные баллы (1балл=1рубль)! А именно - 10% от суммы ЛЮБОЙ услуги на нашей автомойке. Что для этого нужно сделать? Все очень просто!</p>
     <div class="bonus-step">
       <h4 class="bonus-step-title">шаг 1</h4>
@@ -30,7 +31,23 @@
 export default {};
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+.hidden {
+  opacity: 0;
+
+  &-right {
+    transform: translate(50px, 0);
+  }
+}
+
+.showElement {
+  opacity: 1;
+  transform: translate(0, 0);
+  -webkit-transition: all 0.5s ease-out;
+  -moz-transition: all 0.5s ease-out;
+  transition: all 0.5s ease-out;
+}
+
 .bonus {
   padding: 20px;
   margin: 0;

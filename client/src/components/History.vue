@@ -3,15 +3,15 @@
     <h2>Немного истории</h2>
     <div class="border"></div>
     <ul>
-      <li class="history-container">
+      <li class="history-container hidden hidden-left" v-infocus="'showElement'">
         <h3>2001 г.</h3>
         <p>«Автомойка на Партизанской» на рынке обслуживания автомобилей существует c 2001 года. За это время была сформирована рабочая база, на основе которой шло дальнейшее развитие компании.</p>
       </li>
-      <li class="history-container">
+      <li class="history-container hidden hidden-left" v-infocus="'showElement'">
         <h3>2004 г.</h3>
         <p>В 2004 году, для удобства наших клиентов, была создана зона для отдыха. Теперь пока мы работаем с вашим автомобилем или мотоциклом, вы можете насладиться чашечкой кофе в нашей комнате ожидания.</p>
       </li>
-      <li class="history-container">
+      <li class="history-container hidden hidden-left" v-infocus="'showElement'">
         <h3>2007 г.</h3>
         <p>В связи с большим наплывом клиентов в 2007 году, было решено открыть 3 дополнительных бокса и построить на территории автомойки замечательную летнюю веранду для посетителей.</p>
       </li>
@@ -23,7 +23,23 @@
 export default {};
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+.hidden {
+  opacity: 0;
+}
+
+.hidden-left {
+  transform: translate(-50px, 0);
+}
+
+.showElement {
+  opacity: 1;
+  transform: translate(0, 0);
+  -webkit-transition: all 0.5s ease-out;
+  -moz-transition: all 0.5s ease-out;
+  transition: all 0.5s ease-out;
+}
+
 .history {
   margin: 0;
   background-image: url(../assets/Bugatti-Chiron_010.png),
@@ -62,18 +78,28 @@ export default {};
 }
 
 .history-container {
-  list-style-image: url(../assets/Line2.png);
-  list-style-position: inside;
+  list-style: none;
 }
 
 .history h3 {
-  display: inline-block;
+  position: relative;
   font-family: Ubuntu, Helvetica, sans-serif, Arial;
   font-style: normal;
+  padding-left: 60px;
   font-weight: 200;
   font-size: 30px;
   line-height: 10px;
   color: #000000;
+
+  &::before {
+    content: '';
+    position: absolute;
+    background: url(../assets/Line2.png) no-repeat;
+    right: calc(100% - 40px);
+    top: calc(50% - 3px);
+    width: 40px;
+    height: 6px;
+  }
 }
 
 .history p {

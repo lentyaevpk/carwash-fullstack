@@ -2,15 +2,13 @@
   <div class="description">
     <h2>Наш автомоечный комплекс - это</h2>
     <div class="border"></div>
-    <transition appear name="appear">
       <div class="description-container" v-show="show" ref="description">
-        <div v-for="description in descriptions" :key="description.id" class="description-container-type">
+        <div v-for="description in descriptions" :key="description.id" class="description-container-type hidden hidden-left" v-infocus="'showElement'">
           <img :src="setImage(description)" />
           <h4>{{description.title}}</h4>
           <p>{{description.text}}</p>
         </div>
-      </div>
-    </transition>  
+      </div>  
     <router-link to="/prices" class="details">Узнать подробнее</router-link>
   </div>
 </template>
@@ -77,6 +75,22 @@ h2 {
   font-size: 40px;
   line-height: 47px;
   color: #353535;
+}
+
+.hidden {
+  opacity: 0;
+}
+
+.hidden-left {
+  transform: translate(-100px, 0);
+}
+
+.showElement {
+  opacity: 1;
+  transform: translate(0, 0);
+  -webkit-transition: all 0.5s ease-out;
+  -moz-transition: all 0.5s ease-out;
+  transition: all 0.5s ease-out;
 }
 
 h4 {

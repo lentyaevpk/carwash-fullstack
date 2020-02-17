@@ -1,9 +1,9 @@
 <template>
   <div class="service">
-    <h2>Услуги автомойки</h2>
+    <h2 class="hidden hidden-right" v-infocus="'showElement'">Услуги автомойки</h2>
     <div class="border"></div>
     <div class="service-types">
-      <div v-for="service in services" :key="service.id" class="type-container">
+      <div v-for="service in services" :key="service.id" class="type-container hidden hidden-right" v-infocus="'showElement'">
         <img :src="setImage(service)" class="service-icon"/>
         <div>{{service.text}}</div>
       </div>
@@ -68,6 +68,22 @@ export default {
 .service h2 {
   padding: 20px;
   color: white;
+}
+
+.hidden {
+  opacity: 0;
+}
+
+.hidden-right {
+  transform: translate(50px, 0);
+}
+
+.showElement {
+  opacity: 1;
+  transform: translate(0, 0);
+  -webkit-transition: all 0.5s ease-out;
+  -moz-transition: all 0.5s ease-out;
+  transition: all 0.5s ease-out;
 }
 
 .service .border {

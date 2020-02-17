@@ -76,6 +76,7 @@ export default {
   justify-content: center;
   transition: 0.3s;
   transform: 1s;
+  z-index: 2;
 }
 
 .header-menu-nav {

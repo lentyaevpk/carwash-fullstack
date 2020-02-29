@@ -55,7 +55,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped lang="scss">
 .appear-enter-active {
   transition: all 1s ease;
 }

@@ -15,7 +15,7 @@ import Footer from '@/components/Footer.vue'
 
 export default {
     components: {
-    Header, ServiceSelection, PriceTable, Footer
-  }
+        Header, ServiceSelection, PriceTable, Footer
+    }
 }
 </script>

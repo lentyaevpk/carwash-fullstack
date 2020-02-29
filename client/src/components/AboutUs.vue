@@ -16,7 +16,7 @@
 export default {};
 </script>
 
-<style>
+<style scoped lang="scss">
 .aboutUs {
   padding-top: 70px;
   background: -webkit-gradient(

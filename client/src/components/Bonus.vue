@@ -52,73 +52,100 @@ export default {};
   padding: 20px;
   margin: 0;
   background: #000c1d;
+
+  & h2 {
+    margin: 0;
+    padding: 40px;
+    text-align: center;
+    font-family: Roboto, Ubuntu, Helvetica, sans-serif, Arial;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 40px;
+    line-height: 47px;
+    letter-spacing: 0.02em;
+    color: #d8d8d8;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  }
+
+  &-description {
+    width: 60%;
+    margin: 30px auto;
+    font-family: Ubuntu, Helvetica, sans-serif, Arial;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 30px;
+    text-align: center;
+    color: #d8d8d8;
+  }
+
+  &-step {
+    margin: auto;
+    width: 75%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+
+    &-title {
+      width: 30%;
+      text-align: center;
+      font-family: Ubuntu, Helvetica, sans-serif, Arial;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 20px;
+      line-height: 34px;
+      color: #d8d8d8;
+      text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+      text-transform: uppercase;
+    }
+  }
+
+  &-images {
+    margin: auto;
+    width: 58%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+  }
+
+  &-parag {
+    margin: auto;
+    width: 75%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+
+    & p {
+      width: 30%;
+      text-align: center;
+      font-family: Ubuntu, Helvetica, sans-serif, Arial;
+      font-style: normal;
+      font-weight: 300;
+      font-size: 16px;
+      line-height: 30px;
+      color: #d8d8d8;
+      text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    }
+  }
 }
 
-.bonus h2 {
-  margin: 0;
-  padding: 40px;
-  text-align: center;
-  font-family: Roboto, Ubuntu, Helvetica, sans-serif, Arial;
-  font-style: normal;
-  font-weight: 300;
-  font-size: 40px;
-  line-height: 47px;
-  letter-spacing: 0.02em;
-  color: #d8d8d8;
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-}
-
-.bonus .border {
+.border {
   border: 0.25px solid #f8f8f8;
-}
-
-.bonus-description {
-  width: 60%;
-  margin: 30px auto;
-  font-family: Ubuntu, Helvetica, sans-serif, Arial;
-  font-style: normal;
-  font-weight: 300;
-  font-size: 20px;
-  line-height: 30px;
-  text-align: center;
-  color: #d8d8d8;
-}
-
-.bonus-step {
-  margin: auto;
-  width: 60%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-}
-
-.bonus-step-title {
-  text-align: center;
-  font-family: Ubuntu, Helvetica, sans-serif, Arial;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 20px;
-  line-height: 34px;
-  color: #d8d8d8;
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  text-transform: uppercase;
-}
-
-.bonus-images {
-  margin: auto;
-  width: 60%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
 }
 
 .lines {
@@ -126,33 +153,6 @@ export default {};
   display: block;
   width: 41%;
   height: 10px;
-}
-
-.bonus-parag {
-  margin: auto;
-  width: 75%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-}
-
-.bonus-parag p {
-  margin: auto;
-  padding: 30px;
-  text-align: center;
-  font-family: Ubuntu, Helvetica, sans-serif, Arial;
-  font-style: normal;
-  font-weight: 300;
-  font-size: 16px;
-  line-height: 30px;
-  color: #d8d8d8;
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
 button {

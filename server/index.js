@@ -15,7 +15,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 const db = require('./config/keys').mongoURI;
 mongoose.connect(db, {
-    useNewUrlParser: true
+    useNewUrlParser: true,
+    useUnifiedTopology: true
 }).then(() => {
     console.log(`Database connected succsesfully ${db}`)
 }).catch(err => {

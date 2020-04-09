@@ -6,6 +6,14 @@ import axios from 'axios'
 
 Vue.config.productionTip = false
 
+// load token from localStorage
+Vue.prototype.$http = axios;
+const token = localStorage.getItem('token');
+
+if (token) {
+  Vue.prototype.$http.defaults.headers.common['Authorization'] = token;
+}
+
 Vue.directive('infocus', {
   isLiteral: true,
     inserted: (el, binding) => {

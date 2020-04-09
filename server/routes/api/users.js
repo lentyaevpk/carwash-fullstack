@@ -50,7 +50,7 @@ router.post('/register', (req, res) => {
             newUser.password = hash;
             newUser.save().then(user => {
                 return res.status(201).json({
-                    succes: true,
+                    success: true,
                     msg: 'User is now registred'
                 });
             });
@@ -63,7 +63,7 @@ router.post('/login', (req, res) => {
         if (!user) {
             return res.status(404).json({
                 msg: 'Username is not found',
-                succes: false
+                success: false
             })
         }
 
@@ -78,7 +78,8 @@ router.post('/login', (req, res) => {
                 }
                 jwt.sign(payload, key, {expiresIn: 604800}, (err, token) => {
                     res.status(200).json({
-                        succes: true,
+                        success: true,
+                        user: user,
                         token: `Bearer ${token}`,
                         msg: 'You are now logged in'
                     })
@@ -86,7 +87,7 @@ router.post('/login', (req, res) => {
             } else {
                 return res.status(404).json({
                     msg: 'Incorrect password',
-                    succes: false
+                    success: false
                 })
             }
         })

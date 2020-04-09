@@ -12,7 +12,7 @@
           <span>/</span>
           <span @click="isLoginForm = true" :class="[{'pressed': isLoginForm}]">Вход</span>
         </div>
-        <form v-if="isLoginForm" class="login-form">
+        <form v-if="isLoginForm" class="login-form" @submit.prevent="loginUser">
           <input
             id="log_username"
             type="text"
@@ -27,7 +27,7 @@
             name="log_password"
             v-model="logPassword"
           /> 
-          <button>Войти</button>
+          <input type="submit" value="Войти" />
         </form>
         <form v-else class="registration-form">
           <input
@@ -73,6 +73,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
   data() {
     return {
@@ -85,6 +87,23 @@ export default {
       regPassword: '',
       regConfirmPassword: ''
     }
+  },
+  methods: {
+    loginUser() {
+      let user = {
+        username: this.logUsername,
+        password: this.logPassword
+      };
+      this.login(user)
+        .then(res => {
+          if (res.data.success) {
+            this.$router.push('/');
+          }
+        }).catch(err => {
+          console.log(err)
+        })
+    },
+    ...mapActions(['login'])
   }
 };
 </script>

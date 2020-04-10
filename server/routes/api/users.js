@@ -53,7 +53,7 @@ router.post('/register', (req, res) => {
                     success: true,
                     msg: 'User is now registred'
                 });
-            });
+            }).catch(err => {})
         });
     });
 });

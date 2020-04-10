@@ -6,6 +6,7 @@
         <li>На Ваш аккаунт сразу же начисляются 100 баллов, которыми Вы можете рассплачиваться за наши услуги.</li>
         <li>Будучи зарегестрированным - вы можете оставить свой отзыв, пожелание или предложение.</li>
       </ul>
+      <button @click.prevent="logoutUser">Logout</button>
       <div class="container-login-forms">
         <div>
           <span @click="isLoginForm = false" :class="[{'pressed': !isLoginForm}]">Регистрация</span>
@@ -29,7 +30,7 @@
           /> 
           <input type="submit" value="Войти" />
         </form>
-        <form v-else class="registration-form">
+        <form v-else class="registration-form" @submit.prevent="registerUser">
           <input
             id="reg_username"
             type="text"
@@ -65,7 +66,7 @@
             name="reg_confirm_password"
             v-model="regConfirmPassword"
           />
-          <button>Регистрация</button>
+          <input type="submit" value="Регистрация" />
         </form>
       </div>
     </div>
@@ -103,7 +104,24 @@ export default {
           console.log(err)
         })
     },
-    ...mapActions(['login'])
+    registerUser() {
+      let user = {
+        username: this.regUsername,
+        password: this.regPassword,
+        confirm_password: this.regConfirmPassword,
+        email: this.regEmail,
+        name: this.regName
+      };
+      this.register(user).then(res => {
+        if (res.data.success) {
+          this.$router.push('/')
+        }
+      })
+    },
+    logoutUser() {
+      this.logout();
+    },
+    ...mapActions(['login', 'register', 'logout'])
   }
 };
 </script>

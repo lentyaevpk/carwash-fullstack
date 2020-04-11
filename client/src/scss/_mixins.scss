@@ -1,0 +1,50 @@
+$mp: 320px;
+$ml: 480px;
+$tp: 600px;
+$tl: 960px;
+$desktop: 1280px;
+$big-desktop: 1920px;
+
+@mixin component-size($device) {
+    @if $device == mp {
+        @media (max-width: $tp - 1) and (orientation: portrait) {
+            @content;
+        }
+    }
+
+    @else if $device == ml {
+        @media (max-width: $tl - 1) and (orientation: landscape) {
+            @content;
+        }
+    }
+
+    @else if $device == tp {
+        @media (min-width: $tp) and (orientation: portrait) {
+            @content;
+        }
+    }
+
+    @else if $device == tl {
+        @media (min-width: $tl) and (orientation: landscape) {
+            @content;
+        }
+    }
+
+    @else if $device == tablet {
+        @media (min-width: $tp) and (orientation: portrait), (min-width: $tl) and (orientation: landscape) {
+            @content;
+        }
+    }
+
+    @else if $device == desktop {
+        @media (min-width: $desktop) {
+            @content;
+        }
+    }
+
+    @else if $device == bigdesktop {
+        @media (min-width: $big-desktop) {
+            @content;
+        }
+    }
+}

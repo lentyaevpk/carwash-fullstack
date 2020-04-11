@@ -1,21 +1,6 @@
 <template>
   <div>
-    <img class="menu-button" src="@/assets/menu.png" @click="toggleMenu" />
-    <div class="header-menu">
-      <a class="header-menu-contacts">
-        <img src="@/assets/location.png" />ул.Бр.Сорокиных 3
-      </a>
-      <router-link
-        v-for="link in links"
-        class="header-menu-nav"
-        v-bind:key="link.id"
-        :to="link.way"
-      >{{ link.title }}</router-link>
-      <a class="header-menu-contacts">
-        <img src="@/assets/time.png" />+7 927 548 1406
-      </a>
-    </div>
-    <div class="shadow"></div>
+    
   </div>
 </template>
 

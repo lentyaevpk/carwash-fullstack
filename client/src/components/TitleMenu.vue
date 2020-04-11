@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <MainHeader />
+    <Menu />
     <transition appear name="fade">
       <div class="header-titles">
         <div class="header-maintitle">Автомойка на Партизанской</div>
@@ -11,10 +11,10 @@
 </template>
 
 <script>
-import MainHeader from "@/components/MainHeader.vue";
+import Menu from "@/components/Menu.vue";
 export default {
   components: {
-    MainHeader
+    Menu
   },
   data() {
     return {

@@ -1,13 +1,22 @@
 <template>
-  <div class="menu">
-    <div class="menu__info menu_info--adress">ул. Бр. Сорокиных 3</div>
+  <div :class="['menu', {'menu--white':  isScrolled || !isMainPage}]">
+    <div class="menu__info">
+      <div :class="['menu__text', 'menu__text--address', {'menu__text--white': isScrolled || !isMainPage}]">
+        ул. Бр. Сорокиных 3
+      </div>
+    </div>
     <router-link
       v-for="link in links"
-      class="menu__link"
+      :class="['menu__link', {'menu__link--white': isScrolled || !isMainPage}]"
       v-bind:key="link.id"
-      :to="link.way"
+      :to="link.to"
+      exact-active-class="menu__link--active"
     >{{ link.text }}</router-link>
-    <div class="menu__info menu__info--tel">+7 927 548 1406</div>
+    <div class="menu__info">
+      <div :class="['menu__text', 'menu__text--tel', {'menu__text--white': isScrolled || !isMainPage}]">
+        +7 927 548 1406
+      </div>
+    </div>
   </div>
 </template>
 
@@ -25,51 +34,153 @@ export default {
         { to: '/works', text: 'Работы' },
         { to: '/login', text: 'Войти' },
       ],
-      isMenuWhite: false
+      isScrolled: false
     };
+  },
+  mounted() {
+    window.addEventListener("scroll", this.scrollingNav);
+  },
+  computed: {
+    isMainPage() {
+      return this.$route.path === '/'
+    }
   },
   methods: {
     // Метод для изменения цвета меню на главной странице при прокрутке
     scrollingNav() {
-      this.isMenuWhite = document.documentElement.scrollTop ? true : false
-    },
-    watchResize() {
-      let menu = document.querySelector(".header-menu");
-      if (document.documentElement.clientWidth > 600) {
-        menu.style.left = "0%";
-      } else {
-        menu.style.left = "-50%";
+      if (this.isMainPage) {
+        this.isScrolled = document.documentElement.scrollTop ? true : false
       }
-    },
-
-    // Выпадающее меню для мобильных версий
-    toggleMenu() {
-      let menu = this.$refs.headerMenu;
-      let shadowOverlay = this.$refs.shadow;
-      if (this.isShown) {
-        menu.style.left = "-50%";
-        shadowOverlay.classList.toggle("overlay");
-      } else {
-        menu.style.left = "0%";
-        shadowOverlay.classList.toggle("overlay");
-      }
-      this.isShown = !this.isShown;
     }
-  },
-  mounted() {
-    window.addEventListener("scroll", this.scrollingNav);
-    window.addEventListener("resize", this.watchResize);
   }
 };
 </script>
 
+<style lang="scss" scoped>
+.router-link-exact-active {
+  color: #fff;
+  background: linear-gradient(180deg, rgba(13, 52, 255, 0.52) 0%, rgba(255, 255, 255, 0) 100%), #00B2FF;
+}
+</style>
 <style lang="scss">
 .menu {
-  &__info {
-    &--adress{}
-    &--tel{}
+  display: flex;
+  transition: 0.3s;
+  width: 35%;
+  height: 100%;
+  flex-flow: column;
+  padding-top: 75px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.19) 0%, rgba(255, 255, 255, 0) 100%), #F8F8F8;
+
+  @include component-size(tl) {
+    width: 100%;
+    height: auto;
+    flex-flow: row;
+    padding: 0;
+    background: transparent;
   }
 
-  &__link {}
+  @include component-size(mp) {
+    width: 60%;
+  }
+
+  &--white {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.19) 0%, rgba(255, 255, 255, 0) 100%), #F8F8F8;
+  }
+
+  &__info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 75px;
+    order: 1;
+
+    @include component-size(tl) {
+      width: 23%;
+      order: 0;
+    }
+  }
+
+  &__text {
+    color: #858585;
+    text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+
+    @include component-size(tablet) {
+      font-size: 14px;
+      letter-spacing: 0.02em;
+    }
+
+    @include component-size(tl) {
+      color: #fff;
+    }
+
+    &--address{
+      position: relative;
+      left: 17px;
+
+      &::before {
+        content: '';
+        background: url(~@images/menu/1.svg) no-repeat;
+        width: 33px;
+        height: 50px;
+        position: absolute;
+        top: calc(50% - 25px);
+        left: calc(0% - 38px);
+      }
+    }
+
+    &--tel{
+      position: relative;
+      left: 25px;
+
+      &::before {
+        content: '';
+        background: url(~@images/menu/2.svg) no-repeat;
+        width: 50px;
+        height: 50px;
+        position: absolute;
+        top: calc(50% - 25px);
+        left: calc(0% - 52px);
+      }
+    }
+
+    &--white {
+      color: #858585;
+    }
+  }
+
+  &__link {
+    color: #353535;
+    text-decoration: none;
+    text-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25);
+    height: 75px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s;
+
+    &:hover {
+      color: #fff;
+      background: linear-gradient(180deg, rgba(13, 52, 255, 0.52) 0%, rgba(255, 255, 255, 0) 100%), #00B2FF;
+    }
+    
+    @include component-size(tablet) {
+      font-size: 18px;
+    }
+
+    @include component-size(tl) {
+      width: 9%;
+      color: #fff;
+    }
+
+    &--white {
+      color: #353535;
+    }
+
+    &--active {
+      color: #fff;
+      background: linear-gradient(180deg, rgba(13, 52, 255, 0.52) 0%, rgba(255, 255, 255, 0) 100%), #00B2FF;
+    }
+  }
 }
 </style>

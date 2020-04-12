@@ -20,14 +20,14 @@ export default {
     };
   },
   methods: {
-    watchResize() {
-      let menu = document.querySelector(".header-menu");
-      if (document.documentElement.clientWidth > 600) {
-        menu.style.left = "0%";
-      } else {
-        menu.style.left = "-50%";
-      }
-    },
+    // watchResize() {
+    //   let menu = document.querySelector(".header-menu");
+    //   if (document.documentElement.clientWidth > 600) {
+    //     menu.style.left = "0%";
+    //   } else {
+    //     menu.style.left = "-50%";
+    //   }
+    // },
 
     // Выпадающее меню для мобильных версий
     toggleMenu() {
@@ -43,9 +43,9 @@ export default {
       this.isShown = !this.isShown;
     }
   },
-  mounted() {
-    window.addEventListener("resize", this.watchResize);
-  }
+  // mounted() {
+  //   window.addEventListener("resize", this.watchResize);
+  // }
 };
 </script>
 

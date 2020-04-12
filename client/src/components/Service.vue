@@ -1,12 +1,15 @@
 <template>
   <div class="service">
-    <h2 class="hidden hidden-right" v-infocus="'showElement'">Услуги автомойки</h2>
-    <div class="border"></div>
-    <div class="service-types">
-      <div v-for="service in services" :key="service.id" class="type-container hidden hidden-right" v-infocus="'showElement'">
-        <img :src="setImage(service)" class="service-icon"/>
-        <div>{{service.text}}</div>
-      </div>
+    <h2 class="hidden hidden-right service__title title" v-infocus="'showElement'">Услуги автомойки</h2>
+    <div class="service__body">
+      <figure
+        v-for="item in services"
+        :key="item.id" class="service-item hidden hidden-right"
+        v-infocus="'showElement'"
+      >
+        <img :src="require(`@images/service/${item.image}`)" class="service-item__image"/>
+        <figcaption class="service-item__text">{{item.text}}</figcaption>
+      </figure>
     </div>
   </div>
 </template>
@@ -18,114 +21,94 @@ export default {
       services: [
         {
           text: 'Мойка кузова',
-          image: 'Intersect.png'
+          image: '1.svg'
         },
         {
           text: 'Доп. услуги',
-          image: 'Intersect2.png'
+          image: '2.svg'
         },
         {
           text: 'Защ. покрытие',
-          image: 'Intersect3.png'
+          image: '3.svg'
         },
         {
           text: 'Шиномонтаж',
-          image: 'Intersect4.png'
+          image: '4.svg'
         },
         {
           text: 'Химчистка',
-          image: 'Intersect5.png'
+          image: '5.svg'
         },
         {
           text: 'Полировка',
-          image: 'Intersect6.png'
+          image: '6.svg'
         },
         {
           text: 'Химчистка ковров',
-          image: 'Intersect7.png'
+          image: '7.svg'
         },
         {
           text: 'Антигр. пленка',
-          image: 'Intersect8.png'
+          image: '8.svg'
         }
       ]
-    }
-  },
-  methods: {
-    setImage(block) {
-      return `/static/img/${block.image}`
     }
   }
 };
 </script>
 
-<style scoped>
+<style lang="scss">
 .service {
-  background: linear-gradient(180deg, #001d55 0%, rgba(255, 255, 255, 0) 100%),
-    #0075ff;
-}
+  padding: 35px 50px;
+  background: linear-gradient(180deg, #001d55 0%, rgba(255, 255, 255, 0) 100%), #0075ff;
 
-.service h2 {
-  padding: 20px;
-  color: white;
-}
+  &__title {
+    color: #fff;
 
-.hidden {
-  opacity: 0;
-}
+    &:before {
+      background-color: #fff;
+    }
+  }
 
-.hidden-right {
-  transform: translate(50px, 0);
-}
+  &__body {
+    display: flex;
+    flex-flow: column;
+    
+    @include component-size(tablet) {
+      flex-flow: row wrap;
+      justify-content: space-between;
+    }
 
-.showElement {
-  opacity: 1;
-  transform: translate(0, 0);
-  -webkit-transition: all 0.5s ease-out;
-  -moz-transition: all 0.5s ease-out;
-  transition: all 0.5s ease-out;
-}
+    @include component-size(ml) {
+      flex-flow: row wrap;
+    }
+  }
 
-.service .border {
-  border: 0.25px solid white;
-}
-
-.service-types {
-  margin: 20px 100px;
-  padding: 20px;
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-around;
-}
-
-.type-container {
-  display: flex;
-  flex-flow: column nowrap;
-  flex-basis: 25%;
-  margin: 30px 0;
-}
-
-.type-container div {
-  text-align: center;
-  font-family: Ubuntu, Helvetica, sans-serif, Arial;
-  font-style: normal;
-  font-weight: 300;
-  font-size: 20px;
-  line-height: 34px;
-  letter-spacing: 0.02em;
-  text-transform: capitalize;
-  color: #d8d8d8;
-}
-
-.service-icon {
-  margin: auto;
-}
-
-@media screen and (max-width: 1200px) {
-  .service-types {
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
+  &-item {
+    flex: 1 1 25%;
+    display: flex;
     justify-content: center;
+    flex-flow: column;
+    margin: 20px 0;
+
+    @include component-size(ml) {
+      flex: 1 1 50%;
+    }
+
+    &__text {
+      text-align: center;
+      color: #fff;
+      font-size: 20px;
+      line-height: 24px;
+      letter-spacing: 0.02em;
+      padding: 20px 0;
+
+      @include component-size(tablet) {
+        font-size: 24px;
+        line-height: 26px;
+      } 
+    }
   }
 }
+
 </style>

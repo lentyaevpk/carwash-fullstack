@@ -1,6 +1,6 @@
 <template>
   <div class="prices">
-    <h1>Автомойка</h1>
+    <h1 class="prices__title title">Автомойка</h1>
     <table class="prices-table">
       <tr>
         <td>Наименование услуги</td>
@@ -98,64 +98,50 @@
 export default {};
 </script>
 
-<style scoped>
+<style lang="scss">
 .prices {
   background: #000c1d;
   padding: 30px;
+
+  &__title {
+    color: #fff;
+
+    &::before {
+      background-color: #fff;
+    }
+  }
 }
 
 .prices-table {
   margin: auto;
   text-align: center;
-  font-family: Ubuntu, Helvetica, sans-serif, Arial;
-  font-style: normal;
-  font-weight: 300;
-  font-size: 22px;
-  line-height: 34px;
+  font-size: 14px;
+  line-height: 20px;
   letter-spacing: 0.02em;
   text-transform: capitalize;
   color: #e5e5e5;
   border: 3px solid #1063fe;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
   border-collapse: collapse;
+
+  @include component-size(tablet) {
+    font-size: 18px;
+    line-height: 34px;
+  }
 }
 
 .prices-table td {
-  padding: 10px;
+  padding: 5px;
   border: 1px solid #1063fe;
-}
 
-@media screen and (max-width: 800px) {
-  .prices-table {
+  @include component-size(tablet) {
+    padding: 10px;
     font-size: 18px;
-    line-height: 28px;
+    line-height: 34px;
   }
-}
 
-@media screen and (max-width: 1200px) {
-  .prices-table td {
+  @include component-size(mp) {
     padding: 0;
   }
-}
 
-@media screen and (max-width: 450px) {
-  .prices-table {
-    font-size: 16px;
-    line-height: 24px;
-  }
-}
-
-@media screen and (max-width: 375px) {
-  .prices-table {
-    font-size: 14px;
-  }
-}
-
-@media screen and (max-width: 330px) {
-  .prices-table {
-    font-size: 12px;
-    line-height: 20px;
-  }
 }
 </style>

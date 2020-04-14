@@ -1,42 +1,50 @@
 <template>
   <div class="feedback">
-    <h1>Поделитесь впечатлениями</h1>
-    <div class="border"></div>
-    <div class="feedback-comments">
-      <ul>
-        <li v-for="(post, index) in posts" :key="index">
-          <h2>
+    <h1 class="feedback__title title">Поделитесь впечатлениями</h1>
+    <Loader class="feedback__loader" v-if="isLoading"/>
+    <div v-else class="feedback-container">
+      <ul v-if="posts.length" class="feedback-container__list">
+        <li v-for="(post, index) in posts" :key="index" class="post">
+          <h2 class="post__title">
             {{ post.name }}
             <span>{{ `${post.createdAt.getDate()}/${post.createdAt.getMonth()}/${post.createdAt.getFullYear()}` }}</span>
           </h2>
-          <p>{{ post.text }}</p>
+          <p class="post__text">{{ post.text }}</p>
           <div class="feedback-commets-likeCounter">
             <img src="@/assets/like.png" />4
             <img src="@/assets/dislike.png" />0
           </div>
         </li>
-      </ul>  
-      <div class="feedback-comments-forms">
-        <input type="text" name="name" placeholder="Ваше имя" class="name" v-model="name"/>
-        <!-- <input type="text" name="email" placeholder="E-mail" class="email" /> -->
-        <input type="text" name="message" placeholder="Сообщение" class="message" v-model="text"/>
-      </div>
-      <button @click="createPost">Оставить отзыв</button>
+      </ul>
+      <p v-else class="post__text">Комментариев пока нет.</p>
+      <form v-if="isLoggedIn" class="feedback-container__form form" @submit.prevent="createPost">
+        <div class="form__group">
+          <input type="text" name="message" class="form__input" placeholder=" " v-model="text"/>
+          <label class="form__label">Сообщение</label>
+        </div>
+        <button type="submit" class="feedback__button button">Оставить отзыв</button>
+      </form>
+      <p v-else class="post__text" style="text-align: center;">Авторизуйтесь, чтобы оставлять комментарии.</p>
     </div>
   </div>
 </template>
 
 <script>
+import Loader from './Loader'
 import PostService from '../postService'
+import {mapGetters} from 'vuex'
 
 export default {
   name: 'Posts',
+  components: {
+    Loader
+  },
   data() {
     return {
       posts: [],
       error: '',
       text: '',
-      name: ''
+      isLoading: true
     }
   },
   async created() {
@@ -44,86 +52,122 @@ export default {
       this.posts = await PostService.getPosts();
     } catch(err) {
       this.error = err.message;
+    } finally {
+      this.isLoading = false
     }
+  },
+  computed: {
+    ...mapGetters(['user', 'isLoggedIn'])
   },
   methods: {
     async createPost() {
-      await PostService.insertPost(this.text, this.name);
+      console.log(this.user)
+      await PostService.insertPost(this.text, this.user.username);
       this.posts = await PostService.getPosts();
-      this.text = this.name = '';
+      this.text = '';
     }
   }
 };
 </script>
 
-<style scoped>
-h1 {
-  margin: 0;
-  padding: 30px;
-  text-align: center;
-  font-family: Roboto, Ubuntu, Helvetica, sans-serif, Arial;
-  font-style: normal;
-  font-weight: 300;
-  font-size: 40px;
-  line-height: 47px;
-  letter-spacing: 0.02em;
-  color: #e5e5e5;
-  text-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
-}
-
+<style lang="scss">
 .feedback {
-  padding: 20px;
-  padding-top: 70px;
-  background: #000c1d;
+  padding: 30px;
+  background: #000C1D;
+  min-height: 100vh;
+
+  @include component-size(tl) {
+    padding: 100px 50px;
+  }
+
+  &__title {
+    color: #fff;
+
+    &::before {
+      background-color: #fff;
+    }
+  }
+
+  &__button {
+    border: 2px solid #0057FF;
+    margin: 20px auto;
+    transition: 0.3s;
+    color: #fff;
+    background: transparent;
+
+    &:hover {
+      background-color: #0057FF;
+    }
+
+    @include component-size(tablet) {
+      margin: 40px auto;
+    }
+  }
+
+  &__loader {
+    margin: 50px auto;
+  }
 }
 
-.border {
-  width: 90px;
-  border: 0.25px solid #1063fe;
+.feedback-container {
   margin: auto;
+  
+  @include component-size(tl) {
+    width: 70%;
+  }
+
+  &__list {
+    padding: 0;
+    list-style: none;
+  }
+
+  &__form {
+    margin: 20px auto;
+    width: 75%;
+
+    @include component-size(mp) {
+      width: 100%;
+    }
+  }
 }
 
-.feedback-comments ul {
-  margin: 0 auto;
+.post {
+  margin: 15px 0;
   padding: 20px;
-  width: 70%;
-}
+  border-top: 1px solid #666666;
 
-.feedback-comments h2 {
-  text-align: left;
-  font-family: Ubuntu, Helvetica, sans-serif, Arial;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 18px;
-  line-height: 33px;
-  text-indent: 5px;
-  color: #e5e5e5;
-}
+  &:first-child {
+    border-top: none;
+  }
 
-.feedback-comments span {
-  font-family: Ubuntu, Helvetica, sans-serif, Arial;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 18px;
-  line-height: 33px;
-  text-indent: 5px;
-  color: #858585;
-}
+  &__title {
+    color: #fff;
 
-.feedback-comments li {
-  padding: 10px;
-  list-style: none;
-  border-bottom: 1px solid #666666;
-}
+    @include component-size(mp) {
+      font-size: 14px;
+      line-height: 18px;
+    }
 
-.feedback-comments p {
-  font-family: Ubuntu, Helvetica, sans-serif, Arial;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 18px;
-  line-height: 33px;
-  text-indent: 5px;
-  color: #858585;
+    & span {
+      color: #858585;
+      margin-left: 10px;
+    }
+  }
+
+  &__text {
+    color: #858585;
+    margin: 15px 0;
+    
+    @include component-size(mp) {
+      font-size: 14px;
+      line-height: 18px;
+    }
+
+    @include component-size(tablet) {
+      font-size: 20px;
+      line-height: 24px;
+    }
+  }
 }
 
 .feedback-commets-likeCounter {
@@ -138,155 +182,5 @@ h1 {
   line-height: 40px;
   letter-spacing: 0.02em;
   color: #c4c4c4;
-}
-
-.feedback-commets-likeCounter img {
-  margin: 0px 10px;
-}
-
-.feedback-comments-forms {
-  width: 40%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-pack: distribute;
-  justify-content: space-around;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -ms-flex-flow: row wrap;
-  flex-flow: row wrap;
-  margin: 0 auto;
-  padding: 30px;
-}
-
-.feedback-comments-forms input {
-  padding: 10px;
-  margin: 10px;
-  background: transparent;
-  border: 1px solid #1063fe;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  -webkit-box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
-  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
-  font-family: Ubuntu, Helvetica, sans-serif, Arial;
-  font-style: normal;
-  font-weight: 300;
-  font-size: 18px;
-  letter-spacing: 0.05em;
-  text-indent: 5px;
-  color: #9c9c9c;
-}
-
-.name,
-.email {
-  width: 40%;
-}
-
-.message {
-  width: 90%;
-  height: 100px;
-}
-
-.feedback-comments button {
-  padding: 10px 40px;
-  background: -webkit-gradient(
-      linear,
-      left top,
-      left bottom,
-      from(rgba(13, 52, 255, 0.52)),
-      to(rgba(255, 255, 255, 0))
-    ),
-    #00b2ff;
-  background: -o-linear-gradient(
-      top,
-      rgba(13, 52, 255, 0.52) 0%,
-      rgba(255, 255, 255, 0) 100%
-    ),
-    #00b2ff;
-  background: linear-gradient(
-      180deg,
-      rgba(13, 52, 255, 0.52) 0%,
-      rgba(255, 255, 255, 0) 100%
-    ),
-    #00b2ff;
-  display: block;
-  margin: 0 auto;
-  border: 0;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  font-family: Ubuntu, Helvetica, sans-serif, Arial;
-  font-style: normal;
-  font-weight: 300;
-  font-size: 18px;
-  line-height: 28px;
-  letter-spacing: 0.05em;
-  text-indent: 5px;
-  color: #f6f6f6;
-  cursor: pointer;
-}
-
-@media screen and (max-width: 900px) {
-  .feedback-comments-forms {
-    -webkit-box-pack: justify;
-    -ms-flex-pack: justify;
-    justify-content: space-between;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-    -ms-flex-flow: column wrap;
-    flex-flow: column wrap;
-    padding: 15px;
-  }
-
-  .feedback-comments-forms {
-    width: 90%;
-  }
-
-  .name,
-  .email,
-  .message {
-    width: 90%;
-  }
-}
-
-@media screen and (max-width: 750px) {
-  .feedback-comments ul {
-    width: 90%;
-  }
-
-  .feedback-comments h2 {
-    font-size: 16px;
-    line-height: 30px;
-  }
-
-  .feedback-comments span {
-    font-size: 16px;
-    line-height: 30px;
-  }
-
-  .feedback-comments p {
-    font-size: 16px;
-    line-height: 30px;
-  }
-}
-
-@media screen and (max-width: 500px) {
-  h1 {
-    font-size: 32px;
-  }
-
-  .feedback-comments h2 {
-    font-size: 14px;
-    line-height: 26px;
-  }
-
-  .feedback-comments span {
-    font-size: 14px;
-    line-height: 26px;
-  }
-
-  .feedback-comments p {
-    font-size: 14px;
-    line-height: 26px;
-  }
 }
 </style>

@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import {mapGetters, mapActions} from 'vuex'
 import Menu from "@/components/Menu.vue";
 import ToggleIcon from '@/components/ToggleIcon'
 import MainFooter from '@/components/MainFooter'
@@ -22,13 +23,19 @@ export default {
       isMenuToggled: false
     }
   },
-  updated() {
-    // window.scrollTo(0,0);
+  created() {
+    if (this.isLoggedIn) {
+      this.getProfile();
+    }
+  },
+  computed: {
+    ...mapGetters(['isLoggedIn'])
   },
   methods: {
     toggleMenu() {
       this.isMenuToggled = !this.isMenuToggled;
-    }
+    },
+    ...mapActions(['getProfile'])
   }
 }
 </script>
@@ -41,7 +48,7 @@ export default {
 .app__menu {
   position: fixed;
   transform: translate(-100%, 0);
-  z-index: 1;
+  z-index: 10;
 
   @include component-size(tl) {
     transform: translate(0, 0);
@@ -56,7 +63,7 @@ export default {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 1;
+  z-index: 20;
 
   @include component-size(tl) {
     display: none;
@@ -139,6 +146,50 @@ export default {
     line-height: 24px;
     width: 300px;
     height: 60px;
+  }
+}
+
+.form {
+  &__group {
+    position: relative;
+    margin-bottom: 20px;
+  }
+
+  &__label {
+    position: absolute;
+    top: calc(50% - 9px);
+    left: 0;
+    color: #9C9C9C;
+    transition: 0.3s;
+    font-size: 18px;
+  }
+
+  &__input {
+    width: 100%;
+    height: 50px;
+    color: #9C9C9C;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #9C9C9C;
+    outline: none;
+    transition: 0.3s;
+    font-size: 18px;
+
+    &:focus {
+      border-bottom: 1px solid #1063FE;
+
+      & ~ .form__label {
+        top: calc(50% - 33px);
+        font-size: 12px;
+      }
+    }
+
+    &:not(:placeholder-shown) {
+      & ~ .form__label {
+        top: calc(50% - 33px);
+        font-size: 12px;
+      }
+    }
   }
 }
 </style>

@@ -12,7 +12,7 @@
           <h2 class="services-item__title">{{service.title}}</h2>
           <p class="services-item__text">{{service.price}}</p>
         </div>
-        <img class="services-item__image" :src="require(`@images/prices/${service.image}`)" />
+        <img class="services-item__image" alt="Узнать подробнее" :src="require(`@images/prices/${service.image}`)" />
         <p class="services-item__descr">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Molestiae qui cum dolorum aliquid animi beatae possimus inventore cumque</p>
       </div>
     </div>

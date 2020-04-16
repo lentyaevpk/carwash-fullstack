@@ -11,7 +11,7 @@
       v-for="(item, index) in carousel"
       :key="index"
       :src="require(`@images/examples/${item.image}`)"
-      alt="Car image"
+      alt="Изображение машины"
       @click="setImage(index)"
       :class="['carousel__item', 'carousel__item--hidden',
         {'carousel__item--left': leftIndex === index,

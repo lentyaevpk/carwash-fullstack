@@ -12,7 +12,7 @@
         <h4 class="bonus-schema__title">шаг 3</h4>
       </div>
       <div class="bonus-schema__image">
-        <img src="@images/bonus/1.svg" alt="">
+        <img src="@images/bonus/1.svg" alt="Изображение этапов бонусной программы">
       </div>
       <div class="bonus-schema__text">
         <p>Зарегистрируйтесь на нашем сайте avtopart.ru</p>

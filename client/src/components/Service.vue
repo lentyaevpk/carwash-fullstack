@@ -7,7 +7,7 @@
         :key="item.id" class="service-item hidden hidden-right"
         v-infocus="'showElement'"
       >
-        <img :src="require(`@images/service/${item.image}`)" class="service-item__image"/>
+        <img :src="require(`@images/service/${item.image}`)" alt="Узнать подробнее" class="service-item__image"/>
         <figcaption class="service-item__text">{{item.text}}</figcaption>
       </figure>
     </div>

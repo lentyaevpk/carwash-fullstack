@@ -13,16 +13,16 @@
         </button>
       </nav>
     </div>
-    <div class="images">
+    <main class="images">
       <Carousel :show="showCarousel"/>
       <div
         v-for="(block, index) in images"
         :key="index"
         :class="['images__item', {'images__item--active': currentImage === index + 1}]"
       >
-        <img :src="require(`@images/examples/${block.image}`)" />
+        <img :src="require(`@images/examples/${block.image}`)" alt="Изображение машины"/>
       </div>
-    </div>
+    </main>
   </div>
 </template>
 
@@ -57,23 +57,6 @@ export default {
     }
   },
   methods: {
-    // Метод для смены изображения
-    // showImage(index) {
-    //   let buttons = document.querySelectorAll("button");
-    //   buttons.forEach(a => {
-    //     a.className = "";
-    //   });
-    //   event.currentTarget.className = "pressed";
-    //   let pictures = document.querySelector(".images").children;
-    //   for (let i = 0; i < pictures.length; i++) {
-    //     pictures[i].className = "hidden";
-    //   }
-    //   if (index == 0) {
-    //     pictures[index].className = "carousel show-carousel";
-    //   } else {
-    //     pictures[index].className = "show-image";
-    //   }
-    // },
     setImage(index) {
       this.currentImage = index;
     }

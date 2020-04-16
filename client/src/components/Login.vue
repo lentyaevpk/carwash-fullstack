@@ -1,6 +1,6 @@
 <template>
   <div class="login-wrapper">
-    <div class="login">
+    <main class="login">
       <ul class="login__description">
         <li class="login__text">Только зарегестрированные пользователи могут зарабатывать и тратить баллы.</li>
         <li class="login__text">На Ваш аккаунт сразу же начисляются 100 баллов, которыми Вы можете рассплачиваться за наши услуги.</li>
@@ -15,7 +15,7 @@
         <LoginForm v-if="isLoginForm"/>
         <RegistrationForm v-else />
       </div>
-    </div>
+    </main>
   </div>
 </template>
 

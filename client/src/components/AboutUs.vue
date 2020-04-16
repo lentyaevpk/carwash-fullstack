@@ -2,7 +2,7 @@
   <div class="about">
     <h2 class="about__title title">О нас</h2>
     <div class="about__body">
-      <img src="@/assets/images/about_us/1.jpg" class="about__image hidden hidden-top" v-infocus="'showElement'"/>
+      <img src="@/assets/images/about_us/1.jpg" alt="Изображение машины" class="about__image hidden hidden-top" v-infocus="'showElement'"/>
       <div class="about__text hidden hidden-top" v-infocus="'showElement'">
         <p>Наш современный автомоечный комплекс на Партизанской - это высокий уровень обслуживания, гарантия качественных работ, связанных с мойкой, химчисткой и полировкой автомобилей любого класса. Нашими отличительными особенностями являются: квалифицированный персонал, качественные моющие и косметические средства ведущих мировых брендов в области ухода за автомобилем, высокотехнологичное оборудование.</p>
         <br/>

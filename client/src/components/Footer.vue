@@ -15,9 +15,9 @@
     <div class="footer__contacts">
       <p class="footer__text">apartiz@yandex.ru</p>
       <div class="footer__socials">
-        <img src="@images/footer/facebook.png" />
-        <img src="@images/footer/instagram.png" />
-        <img src="@images/footer/twitter.png" />
+        <img src="@images/footer/facebook.png" alt="Перейти в facebook аккаунт"/>
+        <img src="@images/footer/instagram.png" alt="Перейти в instagram аккаунт"/>
+        <img src="@images/footer/twitter.png" alt="Перейти в twitter аккаунт"/>
       </div>
     </div>
   </footer>

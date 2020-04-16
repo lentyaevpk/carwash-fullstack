@@ -8,7 +8,7 @@
         class="descr-item hidden hidden-left"
         v-infocus="'showElement'"
       >
-        <img :src="require(`@images/description/${block.image}`)" class="descr-item__image"/>
+        <img :src="require(`@images/description/${block.image}`)" alt="Смысловая иконка" class="descr-item__image"/>
         <h4 class="descr-item__title">{{block.title}}</h4>
         <figcaption class="descr-item__text">{{block.text}}</figcaption>
       </figure>

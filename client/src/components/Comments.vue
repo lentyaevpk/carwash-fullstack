@@ -2,7 +2,7 @@
   <div class="feedback">
     <h1 class="feedback__title title">Поделитесь впечатлениями</h1>
     <Loader class="feedback__loader" v-if="isLoading"/>
-    <div v-else class="feedback-container">
+    <main v-else class="feedback-container">
       <ul v-if="posts.length" class="feedback-container__list">
         <li v-for="(post, index) in posts" :key="index" class="post">
           <h2 class="post__title">
@@ -10,10 +10,6 @@
             <span>{{ `${post.createdAt.getDate()}/${post.createdAt.getMonth()}/${post.createdAt.getFullYear()}` }}</span>
           </h2>
           <p class="post__text">{{ post.text }}</p>
-          <div class="feedback-commets-likeCounter">
-            <img src="@images/like.png" />4
-            <img src="@images/dislike.png" />0
-          </div>
         </li>
       </ul>
       <p v-else class="post__text">Комментариев пока нет.</p>
@@ -25,7 +21,7 @@
         <button type="submit" class="feedback__button button">Оставить отзыв</button>
       </form>
       <p v-else class="post__text" style="text-align: center;">Авторизуйтесь, чтобы оставлять комментарии.</p>
-    </div>
+    </main>
   </div>
 </template>
 
@@ -167,19 +163,5 @@ export default {
       line-height: 24px;
     }
   }
-}
-
-.feedback-commets-likeCounter {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  font-family: Yu Gothic UI, Ubuntu;
-  font-size: 20px;
-  line-height: 40px;
-  letter-spacing: 0.02em;
-  color: #c4c4c4;
 }
 </style>

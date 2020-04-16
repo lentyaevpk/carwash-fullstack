@@ -3,7 +3,7 @@
     <Menu :class="['app__menu', {'app__menu--toggled': isMenuToggled}]"/>
     <ToggleIcon class="app__toggle-icon" @toggleMenu="toggleMenu"/>
     <router-view />
-    <MainFooter />
+    <Footer />
   </div>
 </template>
 
@@ -11,12 +11,12 @@
 import {mapGetters, mapActions} from 'vuex'
 import Menu from "@/components/Menu.vue";
 import ToggleIcon from '@/components/ToggleIcon'
-import MainFooter from '@/components/MainFooter'
+import Footer from '@/components/Footer'
 
 export default {
   name: 'app',
   components: {
-    Menu, ToggleIcon, MainFooter
+    Menu, ToggleIcon, Footer
   },
   data() {
     return {
@@ -179,14 +179,14 @@ export default {
       border-bottom: 1px solid #1063FE;
 
       & ~ .form__label {
-        top: calc(50% - 33px);
+        top: calc(0% - 7px);
         font-size: 12px;
       }
     }
 
     &:not(:placeholder-shown) {
       & ~ .form__label {
-        top: calc(50% - 33px);
+        top: calc(0% - 7px);
         font-size: 12px;
       }
     }

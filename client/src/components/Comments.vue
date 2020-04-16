@@ -11,15 +11,15 @@
           </h2>
           <p class="post__text">{{ post.text }}</p>
           <div class="feedback-commets-likeCounter">
-            <img src="@/assets/like.png" />4
-            <img src="@/assets/dislike.png" />0
+            <img src="@images/like.png" />4
+            <img src="@images/dislike.png" />0
           </div>
         </li>
       </ul>
       <p v-else class="post__text">Комментариев пока нет.</p>
       <form v-if="isLoggedIn" class="feedback-container__form form" @submit.prevent="createPost">
         <div class="form__group">
-          <input type="text" name="message" class="form__input" placeholder=" " v-model="text"/>
+          <input type="text" name="message" required class="form__input" placeholder=" " autocomplete="off" v-model="text"/>
           <label class="form__label">Сообщение</label>
         </div>
         <button type="submit" class="feedback__button button">Оставить отзыв</button>
@@ -61,7 +61,6 @@ export default {
   },
   methods: {
     async createPost() {
-      console.log(this.user)
       await PostService.insertPost(this.text, this.user.username);
       this.posts = await PostService.getPosts();
       this.text = '';

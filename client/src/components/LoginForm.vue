@@ -9,6 +9,7 @@
                 name="log_username"
                 class="form__input"
                 v-model="username"
+                required
             />
             <label class="form__label">Логин</label>
         </div>
@@ -21,6 +22,7 @@
                 name="log_password"
                 class="form__input"
                 v-model="password"
+                required
             /> 
             <label class="form__label">Пароль</label>
         </div>

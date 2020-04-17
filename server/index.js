@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 app.use(cors());
-app.use(express.static(path.join(__dirname, './public')));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 
 require('./config/passport')(passport);
@@ -35,7 +35,7 @@ const posts = require('./routes/api/posts');
 
 app.use('/api/posts', posts);
 
-app.get('/*', (req, res) => {
+app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'public/index.html'));
 })
 

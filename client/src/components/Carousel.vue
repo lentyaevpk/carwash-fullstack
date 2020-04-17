@@ -1,122 +1,190 @@
 <template>
-  <div class="carousel">
-    <img src="@/assets/img1.jpg" class="center" @click="carousel(0)" />
-    <img src="@/assets/img2.jpg" class="left" @click="carousel(1)" />
-    <img src="@/assets/img3.jpg" class="notshown" @click="carousel(2)" />
-    <img src="@/assets/img4.jpg" class="right" @click="carousel(3)" />
+  <div
+    v-if="show"
+    class="carousel" 
+    @touchstart="handleTouchstart"
+    @touchmove="handleTouchmove"
+    @touchend="handleTouchend(centerIndex)"
+    @touchcancel="handleTouchend"
+  >
+    <img
+      v-for="(item, index) in carousel"
+      :key="index"
+      :src="require(`@images/examples/${item.image}`)"
+      alt="Изображение машины"
+      @click="setImage(index)"
+      :class="['carousel__item', 'carousel__item--hidden',
+        {'carousel__item--left': leftIndex === index,
+        'carousel__item--right': rightIndex === index,
+        'carousel__item--center': centerIndex === index
+      }]"
+    >
   </div>
 </template>
 
 <script>
 export default {
+  name: 'Carousel',
+  props: {
+    show: {
+      type: Boolean,
+      required: true
+    }
+  },
+  data() {
+    return {
+      carousel: [
+        {image: '1.jpg'},
+        {image: '2.jpg'},
+        {image: '3.jpg'},
+        {image: '4.jpg'}
+      ],
+      leftIndex: 1,
+      rightIndex: 3,
+      centerIndex: 0
+    }
+  },
   methods: {
     // Метод, реализующий карусель изображений
-    carousel(index) {
-      let images = document.querySelectorAll(".carousel img");
-      images.forEach(a => {
-        a.className = "notshown";
-      });
-      images[index].className = "center";
-      if (index + 1 > images.length - 1) {
-        images[0].className = "left";
-        images[index - 1].className = "right";
+    setImage(index) {
+      this.centerIndex = index;
+      if (index + 1 > this.carousel.length - 1) {
+        this.leftIndex = 0;
+        this. rightIndex = index - 1;
       } else if (index - 1 < 0) {
-        images[images.length - 1].className = "right";
-        images[index + 1].className = "left";
+        this.rightIndex = this.carousel.length - 1;
+        this.leftIndex = index + 1;
       } else {
-        images[index + 1].className = "left";
-        images[index - 1].className = "right";
+        this.rightIndex = index - 1;
+        this.leftIndex = index + 1;
       }
+    },
+    handleTouchstart(e) {
+      const touch = e.touches[0];
+      this.startX = touch.clientX;
+      this.startY = touch.clientY;
+    },
+    handleTouchmove(e) {
+      const minX = 30; // threshold
+      const touch = e.touches[0];
+      this.endX = touch.clientX;
+      this.endY = touch.clientY;
+      if (Math.abs(this.endX) > minX) {
+          e.preventDefault();
+          e.returnValue = false;
+          return false;
+      }
+    },
+    handleTouchend(index) {
+      if (!(this.endX && this.endY)) return;
+      const minX = 30;
+      const maxX = 30;
+      const minY = 50;
+      const maxY = 60;
+      if (
+          // Horizontal move
+          (Math.abs(this.endX - this.startX) > minX) && (Math.abs(this.endY - this.startY) < maxY)
+      ) {
+          this.direction = (this.endX > this.startX) ? 'right' : 'left';
+      } else if (
+          // Vertical move
+          (Math.abs(this.endY - this.startY) > minY) && (Math.abs(this.endX - this.startX) < maxX)
+      ) {
+          this.direction = (this.endY > this.startY) ? 'down' : 'up';
+      }
+      if (this.direction === 'left') {
+          this.goToNext(index);
+      } else if (this.direction === 'right') {
+          this.goToPrev(index);
+      }
+      this.startX = 0;
+      this.endX = 0;
+      this.startY = 0;
+      this.endY = 0;
+      this.direction = null;
+    },
+    goToNext(index) {
+      this.leftIndex = index;
+      this.centerIndex = this.leftIndex ? this.leftIndex - 1 : this.carousel.length - 1;
+      this.rightIndex = this.centerIndex ? this.centerIndex - 1 : this.carousel.length - 1;
+    },
+    goToPrev(index) {
+      this.centerIndex = this.leftIndex;
+      this.rightIndex = index;
+      this.leftIndex = this.centerIndex === this.carousel.length - 1 ? 0 : this.centerIndex + 1;
     }
   }
 };
 </script>
 
-<style scoped>
+<style lang="scss">
 .carousel {
+  position: relative;
   margin: 20px auto;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
   height: 400px;
-}
 
-.notshown {
-  position: absolute;
-  top: 13%;
-  right: 30%;
-  width: 30%;
-  height: 200px;
-  opacity: 0;
-  z-index: -1;
-  -webkit-transition: 0.5s;
-  -o-transition: 0.5s;
-  transition: 0.5s;
-}
-
-.center {
-  position: absolute;
-  display: block;
-  top: 4%;
-  right: 30%;
-  width: 40%;
-  height: 300px;
-  -webkit-transition: 1s;
-  -o-transition: 1s;
-  transition: 1s;
-  z-index: 1;
-}
-
-.right {
-  position: absolute;
-  display: block;
-  right: 9%;
-  top: 13%;
-  width: 30%;
-  height: 200px;
-  opacity: 0.85;
-  -webkit-transition: 1s;
-  -o-transition: 1s;
-  transition: 1s;
-}
-
-.left {
-  position: absolute;
-  display: block;
-  width: 30%;
-  height: 200px;
-  top: 13%;
-  right: 61%;
-  opacity: 0.85;
-  -webkit-transition: 1s;
-  -o-transition: 1s;
-  transition: 1s;
-}
-
-@media screen and (max-width: 450px) {
-  .carousel {
-    height: 300px;
+  @include component-size(bigdesktop) {
+    height: 700px;
   }
+  
+  &__item {
+    position: absolute;
+    display: block;
 
-  .center {
-    height: 230px;
-  }
+    &--hidden {
+      top: 13%;
+      right: 30%;
+      width: 30%;
+      height: 200px;
+      opacity: 0;
+      z-index: 1;
+      transition: 0.5s;
 
-  .right {
-    height: 180px;
-  }
+      @include component-size(bigdesktop) {
+        height: 500px;
+      }
+    }
 
-  .left {
-    height: 180px;
-  }
-}
+    &--center {
+      top: 4%;
+      right: 30%;
+      width: 40%;
+      height: 300px;
+      opacity: 1;
+      z-index: 2;
+      transition: 0.5s;
 
-@media screen and (max-width: 360px) {
-  .carousel {
-    height: 260px;
+      @include component-size(bigdesktop) {
+        height: 600px;
+      }
+    }
+
+    &--right {
+      right: 9%;
+      top: 13%;
+      width: 30%;
+      height: 200px;
+      opacity: 0.85;
+      transition: 0.5s;
+
+      @include component-size(bigdesktop) {
+        height: 500px;
+      }
+    }
+
+    &--left {
+      width: 30%;
+      height: 200px;
+      top: 13%;
+      right: 61%;
+      opacity: 0.85;
+      transition: 0.5s;
+
+      @include component-size(bigdesktop) {
+        height: 500px;
+      }
+    }
   }
 }
 </style>

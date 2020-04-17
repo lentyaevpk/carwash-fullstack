@@ -1,17 +1,19 @@
 <template>
   <div class="services">
-    <h1>Выберите интерисующую услугу</h1>
-    <div class="services-container">
+    <h2 class="services__title title">Выберите интерисующую услугу</h2>
+    <div class="services__body">
       <div
         v-for="(service, index) in services"
         :key="index"
-        class="services-container-type"
+        class="services-item hidden hidden-right"
+        v-infocus="'showElement'"
       >
-        <div>
-          <h2>{{service.title}}</h2>
-          <p>{{service.price}}</p>
+        <div class="services-item__body">
+          <h2 class="services-item__title">{{service.title}}</h2>
+          <p class="services-item__text">{{service.price}}</p>
         </div>
-        <img class="services-image" :src="require(`@/assets/prices/${service.image}`)" />
+        <img class="services-item__image" alt="Узнать подробнее" :src="require(`@images/prices/${service.image}`)" />
+        <p class="services-item__descr">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Molestiae qui cum dolorum aliquid animi beatae possimus inventore cumque</p>
       </div>
     </div>
   </div>
@@ -34,152 +36,127 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .services {
-  padding-top: 70px;
-  background: -webkit-gradient(
-      linear,
-      left top,
-      left bottom,
-      from(#001d55),
-      to(rgba(255, 255, 255, 0))
-    ),
-    #0075ff;
-  background: -o-linear-gradient(top, #001d55 0%, rgba(255, 255, 255, 0) 100%),
-    #0075ff;
-  background: linear-gradient(180deg, #001d55 0%, rgba(255, 255, 255, 0) 100%),
-    #0075ff;
-}
-
-h1 {
-  margin: 0;
   padding: 30px;
-  text-align: center;
-  font-family: Roboto, Ubuntu, Helvetica, sans-serif, Arial;
-  font-style: normal;
-  font-weight: 300;
-  font-size: 40px;
-  line-height: 47px;
-  letter-spacing: 0.02em;
-  color: #e5e5e5;
-  text-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
-}
+  background: linear-gradient(180deg, #001D55 0%, rgba(255, 255, 255, 0) 100%), #0075FF;
 
-.services-container {
-  padding: 30px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-  -ms-flex-flow: row wrap;
-  flex-flow: row wrap;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
+  @include component-size(tl) {
+    padding: 100px 50px;
+  }
 
-  &-type {
-    min-width: 386px;
-    margin: 20px;
-    display: -webkit-box;
-    display: -ms-flexbox;
+  &__title {
+    color: #fff;
+
+    &::before {
+      background-color: #fff;
+    }
+  }
+
+  &__body {
     display: flex;
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-    -ms-flex-flow: row nowrap;
-    flex-flow: row nowrap;
-    width: 30%;
-    background: rgba(0, 0, 0, 0.7);
-    -webkit-box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
-    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
+    flex-flow: column;
+    align-items: center;
 
-    & h2 {
-      font-family: Ubuntu, Helvetica, sans-serif, Arial;
-      font-style: normal;
-      font-weight: 300;
-      font-size: 20px;
-      line-height: 32px;
-      letter-spacing: 0.02em;
-      text-transform: uppercase;
-      color: #e5e5e5;
-    }
-
-    & p {
-      font-family: Ubuntu, Helvetica, sans-serif, Arial;
-      font-style: normal;
-      font-weight: 300;
-      font-size: 20px;
-      line-height: 36px;
-      color: #9c9c9c;
-    }
-
-    & div {
-      margin: 10px;
-    }
-
-    & a {
-      display: -webkit-box;
-      display: -ms-flexbox;
-      display: flex;
-      -webkit-box-align: center;
-      -ms-flex-align: center;
-      align-items: center;
-      font-family: Ubuntu, Helvetica, sans-serif, Arial;
-      font-style: normal;
-      font-weight: 300;
-      font-size: 20px;
-      line-height: 30px;
-      letter-spacing: 0.02em;
-      text-transform: capitalize;
-      color: #009ce1;
-      cursor: pointer;
+    @include component-size(tl) {
+      flex-flow: row wrap;
+      justify-content: space-between;
     }
   }
 }
 
-.services-image {
-  width: 50%;
-  height: 100%;
-}
+.services-item {
+  position: relative;
+  background: rgba(0, 0, 0, 0.7);
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
+  display: flex;
+  justify-content: space-between;
+  width: 70%;
+  margin-bottom: 25px;
+  overflow: hidden;
 
-@media screen and (max-width: 1200px) {
-  .services-container {
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    justify-content: center;
+  @include component-size(tl) {
+    width: 400px;
+    margin-bottom: 40px;
   }
-}
 
-@media screen and (max-width: 450px) {
-  .services-container-type h2 {
+  @include component-size(desktop) {
+    width: 450px;
+  }
+
+  @include component-size(bigdesktop) {
+    width: 600px;
+  }
+
+  @include component-size(mp) {
+    width: 100%;
+  }
+
+  &:hover .services-item__descr{
+    transform: translate(0,0);
+  }
+
+  &__title {
+    text-transform: uppercase;
+    color: #fff;
+    font-weight: normal;
     font-size: 20px;
     line-height: 28px;
+    padding: 10px;
+
+    @include component-size(tablet) {
+      font-size: 24px;
+      line-height: 35px;
+    }
+
+    @include component-size(bigdesktop) {
+      font-size: 30px;
+      line-height: 35px;
+      padding: 30px;
+    }
   }
 
-  .services-container-type p {
-    font-size: 18px;
-    line-height: 36px;
-  }
-}
+  &__text {
+    color: #9C9C9C;
+    padding: 10px;
 
-@media screen and (max-width: 400px) {
-  .services-container-type {
-    min-width: 310px;
-    margin: 10px;
-  }
+    @include component-size(tablet) {
+      padding: 10px;
+      font-size: 20px;
+      line-height: 24px;
+    }
 
-  .services-container-type h2 {
-    font-size: 16px;
-    line-height: 24px;
-  }
-
-  .services-container-type p {
-    font-size: 16px;
-    line-height: 30px;
+    @include component-size(bigdesktop) {
+      font-size: 26px;
+      padding: 30px;
+    }
   }
 
-  .services-container-type a {
-    font-size: 16px;
+  &__image {
+    height: 100%;
+    width: 40%;
+  }
+
+  &__descr {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    color: #fff;
+    padding: 20px;
+    transform: translate(-100%, 0);
+    transition: 0.4s;
+
+    @include component-size(tablet) {
+      font-size: 20px;
+      line-height: 24px;
+    }
+
+    @include component-size(bigdesktop) {
+      font-size: 26px;
+      padding: 30px;
+      line-height: 36px;
+    }
   }
 }
 </style>

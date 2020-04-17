@@ -1,15 +1,19 @@
 <template>
   <div class="description">
-    <h2>Наш автомоечный комплекс - это</h2>
-    <div class="border"></div>
-      <div class="description-container" v-show="show" ref="description">
-        <div v-for="description in descriptions" :key="description.id" class="description-container-type hidden hidden-left" v-infocus="'showElement'">
-          <img :src="setImage(description)" />
-          <h4>{{description.title}}</h4>
-          <p>{{description.text}}</p>
-        </div>
-      </div>  
-    <router-link to="/prices" class="details">Узнать подробнее</router-link>
+    <h2 class="decription__title title">Наш автомоечный комплекс - это</h2>
+    <div class="description__body">
+      <figure
+        v-for="block in descriptions"
+        :key="block.id"
+        class="descr-item hidden hidden-left"
+        v-infocus="'showElement'"
+      >
+        <img :src="require(`@images/description/${block.image}`)" alt="Смысловая иконка" class="descr-item__image"/>
+        <h4 class="descr-item__title">{{block.title}}</h4>
+        <figcaption class="descr-item__text">{{block.text}}</figcaption>
+      </figure>
+    </div>  
+    <router-link to="/prices" class="description__button button" tag="div">Узнать подробнее</router-link>
   </div>
 </template>
 
@@ -17,190 +21,100 @@
 export default {
   data() {
     return {
-      show: false,
       descriptions: [
         { 
           title: 'АВТОМОЙКА',
           text: 'Мы предоставляем весь стандартный комплекс услуг, необходимых для достижения чистоты автомобилей любого класса.',
-          image: '001-car.png'
+          image: '1.svg'
         },
         { title: 'ДЕТЕЙЛИНГ',
           text: 'Современный, профессиональный детейлинг включает в себя восстановление ЛКП,нанесение защитных покрытий ,антигравийная пленка,полировка и т.п.',
-          image: '003-tools-and-utensils.png'
+          image: '2.svg'
         },
         { title: 'ШИНОМОНТАЖ',
           text: 'Шиномонтаж выполняется квалифицированными специалистами на оборудовании,которое предотвращает повреждения диска автомобиля.',
-          image: '006-racing-flag.png'
+          image: '3.svg'
         },
       ]
-    }
-  },
-  mounted() {
-    window.addEventListener('scroll', this.showContent());
-  },
-  methods: {
-    setImage(block) {
-      return `/static/img/${block.image}`
-    },
-    showContent() {
-      let elemCoordinats = document.documentElement.getElementsByClassName('description-container')[0].getBoundingClientRect();
-      let top = elemCoordinats.top;
-      let bottom = elemCoordinats.bottom;
-      // let height = elemCoordinats.height;
-      if((top >= 0) && (bottom <= window.innerHeight)) {
-        this.show = true;
-      }
     }
   }
 };
 </script>
 
-<style scoped lang="scss">
-.appear-enter-active {
-  transition: all 1s ease;
-}
-.appear-leave-active {
-  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-}
-.appear-enter, .appear-leave-to {
-  opacity: 0;
-  transform: translateX(-20px);
-}
+<style lang="scss">
+.description {
+  padding: 35px 50px;
 
-h2 {
-  text-align: center;
-  font-family: Roboto, Ubuntu, Helvetica, sans-serif, Arial;
-  font-style: normal;
-  font-weight: 300;
-  font-size: 40px;
-  line-height: 47px;
-  color: #353535;
-}
+  &__body {
+    display: flex;
+    flex-flow: column;
 
-.hidden {
-  opacity: 0;
-}
+    @include component-size(tl) {
+      flex-flow: row;
+      justify-content: space-between;
+    } 
+  }
 
-.hidden-left {
-  transform: translate(-100px, 0);
-}
+  &__button {
+    border: 2px solid #0057FF;
+    margin: 20px auto;
+    transition: 0.3s;
 
-.showElement {
-  opacity: 1;
-  transform: translate(0, 0);
-  -webkit-transition: all 0.5s ease-out;
-  -moz-transition: all 0.5s ease-out;
-  transition: all 0.5s ease-out;
-}
+    &:hover {
+      background-color: #0057FF;
+      color: #fff;
+    }
 
-h4 {
-  text-align: center;
-  font-family: Roboto, Ubuntu, Helvetica, sans-serif, Arial;
-  font-style: normal;
-  font-weight: 300;
-  font-size: 28px;
-  line-height: 33px;
-  color: #353535;
-}
-
-.border {
-  width: 90px;
-  height: 1px;
-  border: 0.25px solid #000000;
-  margin: auto;
-}
-
-.description-container {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-between;
-  padding: 40px 60px;
-}
-
-.description-container-type {
-  min-width: 250px;
-  display: inline-block;
-  margin: 50px;
-  padding: 10px;
-  width: 23%;
-  background: #f8f8f8;
-}
-
-.description-container-type img {
-  display: block;
-  margin: auto;
-}
-
-.description-container-type h4 {
-  margin: 20px;
-  text-align: center;
-  font-family: Ubuntu, Helvetica, sans-serif, Arial;
-  font-style: normal;
-  font-weight: 300;
-  font-size: 30px;
-  line-height: 41px;
-  color: #353535;
-}
-
-.description-container-type p {
-  margin: auto;
-  text-align: center;
-  font-family: Roboto, Ubuntu, Helvetica, sans-serif, Arial;
-  font-style: normal;
-  font-weight: 300;
-  font-size: 24px;
-  line-height: 28px;
-  color: #666666;
-}
-
-.description a {
-  text-decoration: none;
-}
-
-.details {
-  padding: 10px 40px;
-  background-color: white;
-  width: 20%;
-  display: block;
-  margin: auto;
-  border: 2px solid #0057ff;
-  box-sizing: border-box;
-  font-family: Ubuntu, Helvetica, sans-serif, Arial;
-  font-style: normal;
-  font-weight: 300;
-  font-size: 18px;
-  line-height: 28px;
-  color: #353535;
-  cursor: pointer;
-  text-align: center;
-  text-decoration: none;
-}
-
-@media screen and (max-width: 1200px) {
-  .description-container {
-    justify-content: center;
+    @include component-size(tablet) {
+      margin: 40px auto;
+    }
   }
 }
 
-@media screen and (max-width: 768px) {
-  .details {
-    padding: 5px 20px;
+.descr-item {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+  background: #F8F8F8;
+  padding: 20px;
+  width: 100%;
+  margin: 15px auto;
+
+  @include component-size(desktop) {
+    padding: 30px 50px;
+    width: 350px;
+  }
+
+  @include component-size(tl) {
+    width: 30%;
+    margin: 0;
+  }
+
+  &__title {
+    text-transform: uppercase;
+    font-weight: normal;
+    font-size: 24px;
+    line-height: 28px;
+    padding: 10px;
+
+    @include component-size(tablet) {
+      padding: 20px;
+      font-size: 30px;
+      line-height: 35px;
+    }
+  }
+
+  &__text {
+    text-align: center;
+    color: #666666;
     font-size: 16px;
     line-height: 20px;
-  }
-}
 
-@media screen and (max-width: 425px) {
-  .details {
-    font-size: 14px;
-    width: 50%;
-  }
-}
-
-@media screen and (max-width: 320px) {
-  .details {
-    font-size: 12px;
-    width: 40%;
+    @include component-size(tablet) {
+      font-size: 20px;
+      line-height: 24px;
+    }
   }
 }
 </style>

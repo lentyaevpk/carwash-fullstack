@@ -21,10 +21,14 @@ const actions = {
         if (res.data.success) {
             const token = res.data.token;
             const user = res.data.user;
+            const payload = {
+                token,
+                user
+            }
             // put token into the localStorage
             localStorage.setItem('token', token);
             axios.defaults.headers.common['Authorization'] = token;
-            commit('auth_success', token, user);
+            commit('auth_success', payload);
         }
         return res;
     },
@@ -35,7 +39,6 @@ const actions = {
         if(res.data.success != undefined) {
             commit('register_success');
         }
-
         return res
     },
 
@@ -50,7 +53,7 @@ const actions = {
         await localStorage.removeItem('token');
         commit('logout');
         delete axios.defaults.headers.common['Authorization'];
-        router.push('/');
+        router.push('/login');
         return
     }
 };
@@ -59,9 +62,9 @@ const mutations = {
     auth_request(state) {
         state.status = 'loading'
     },
-    auth_success(state, token, user) {
-        state.token = token;
-        state.user = user;
+    auth_success(state, payload) {
+        state.token = payload.token;
+        state.user = payload.user;
         state.status = 'success'
     },
     register_request(state) {

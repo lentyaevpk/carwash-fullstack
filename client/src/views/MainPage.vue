@@ -1,31 +1,26 @@
 <template>
   <div>
-    <TitleMenu />
+    <MainTitle />
     <Description />
     <Service />
-    <Adress />
-    <MainFooter />
+    <Address />
   </div>
 </template>
 
 <script>
-import TitleMenu from '@/components/TitleMenu.vue'
+import MainTitle from '@/components/MainTitle.vue'
 import Description from '@/components/Description.vue'
 import Service from '@/components/Service.vue'
-import Adress from '@/components/Adress.vue'
-import MainFooter from '@/components/MainFooter.vue'
+import Address from '@/components/Address.vue'
 
 
 export default {
   components: {
-    TitleMenu, Description, Service, Adress, MainFooter
+    MainTitle, Description, Service, Address
   }
 }
 
 </script>
 
 <style>
-body {
-  margin: 0;
-}
 </style>

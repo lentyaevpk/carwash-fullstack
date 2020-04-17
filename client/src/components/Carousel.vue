@@ -123,6 +123,10 @@ export default {
   margin: 20px auto;
   display: flex;
   height: 400px;
+
+  @include component-size(bigdesktop) {
+    height: 700px;
+  }
   
   &__item {
     position: absolute;
@@ -136,6 +140,10 @@ export default {
       opacity: 0;
       z-index: 1;
       transition: 0.5s;
+
+      @include component-size(bigdesktop) {
+        height: 500px;
+      }
     }
 
     &--center {
@@ -146,6 +154,10 @@ export default {
       opacity: 1;
       z-index: 2;
       transition: 0.5s;
+
+      @include component-size(bigdesktop) {
+        height: 600px;
+      }
     }
 
     &--right {
@@ -155,6 +167,10 @@ export default {
       height: 200px;
       opacity: 0.85;
       transition: 0.5s;
+
+      @include component-size(bigdesktop) {
+        height: 500px;
+      }
     }
 
     &--left {
@@ -164,31 +180,11 @@ export default {
       right: 61%;
       opacity: 0.85;
       transition: 0.5s;
+
+      @include component-size(bigdesktop) {
+        height: 500px;
+      }
     }
-  }
-}
-
-@media screen and (max-width: 450px) {
-  .carousel {
-    height: 300px;
-  }
-
-  .center {
-    height: 230px;
-  }
-
-  .right {
-    height: 180px;
-  }
-
-  .left {
-    height: 180px;
-  }
-}
-
-@media screen and (max-width: 360px) {
-  .carousel {
-    height: 260px;
   }
 }
 </style>

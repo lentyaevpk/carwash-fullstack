@@ -127,6 +127,11 @@ export default {};
     font-size: 18px;
     line-height: 34px;
   }
+
+  @include component-size(bigdesktop) {
+    font-size: 26px;
+    line-height: 34px;
+  }
 }
 
 .prices-table td {
@@ -143,5 +148,10 @@ export default {};
     padding: 0;
   }
 
+  @include component-size(bigdesktop) {
+    font-size: 26px;
+    line-height: 34px;
+    padding: 20px;
+  }
 }
 </style>

@@ -26,7 +26,6 @@ import RegistrationForm from './RegistrationForm';
 export default {
   name: 'Login',
   components: {
-    // LoginForm, RegistrationForm
     RegistrationForm,
     LoginForm
   },
@@ -51,33 +50,62 @@ export default {
   margin: 0;
   padding: 50px;
   padding-top: 70px;
+
+  @include component-size(bigdesktop) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
 }
 
 .login {
   display: flex;
   justify-content: space-between;
-  flex-flow: row nowrap;
+  flex-flow: column;
   background: rgba(0, 0, 0, 0.4);
   border-radius: 50px;
-  width: 70%;
+  width: 100%;
   margin: 50px auto;
-  padding: 30px;
+  padding: 15px;
+
+  @include component-size(tl) {
+    width: 70%;
+    flex-flow: row nowrap;
+  }
+
+  @include component-size(tablet) {
+    padding: 30px;
+  }
+
+  @include component-size(bigdesktop) {
+    width: 80%;
+  }
 
   &__description {
     list-style: none;
     padding: 0;
-    width: 50%;
+    width: 100%;
+
+    @include component-size(tl) {
+      width: 50%;
+    }
   }
 
   &__text {
     position: relative;
     color: #E5E5E5;
+    padding: 20px;
+    padding-left: 40px;
 
-    @include component-size(tl) {
+    @include component-size(tablet) {
       font-size: 20px;
       line-height: 28px;
-      padding: 20px;
-      padding-left: 40px;
+    }
+
+    @include component-size(bigdesktop) {
+      font-size: 30px;
+      line-height: 38px;
     }
 
     &:before {
@@ -100,10 +128,19 @@ export default {
   }
 
   &__titles {
-    font-size: 24px;
+    font-size: 20px;
     padding: 20px;
     cursor: pointer;
     color: #E5E5E5;
+
+    @include component-size(tablet) {
+      font-size: 24px;
+    }
+
+    @include component-size(bigdesktop) {
+      font-size: 30px;
+      line-height: 32px;
+    }
 
     &--active {
       color: #1063FE;

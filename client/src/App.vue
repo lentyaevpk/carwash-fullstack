@@ -147,6 +147,10 @@ export default {
     width: 300px;
     height: 60px;
   }
+
+  @include component-size(bigdesktop) {
+    font-size: 24px;
+  }
 }
 
 .form {
@@ -162,6 +166,10 @@ export default {
     color: #9C9C9C;
     transition: 0.3s;
     font-size: 18px;
+
+    @include component-size(bigdesktop) {
+      font-size: 28px;
+    }
   }
 
   &__input {
@@ -175,12 +183,21 @@ export default {
     transition: 0.3s;
     font-size: 18px;
 
+    @include component-size(bigdesktop) {
+      font-size: 28px;
+      height: 80px;
+    }
+
     &:focus {
       border-bottom: 1px solid #1063FE;
 
       & ~ .form__label {
         top: calc(0% - 7px);
         font-size: 12px;
+
+        @include component-size(bigdesktop) {
+          font-size: 18px;
+        }
       }
     }
 
@@ -188,6 +205,10 @@ export default {
       & ~ .form__label {
         top: calc(0% - 7px);
         font-size: 12px;
+
+        @include component-size(bigdesktop) {
+          font-size: 18px;
+        }
       }
     }
   }

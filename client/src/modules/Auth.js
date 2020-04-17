@@ -28,7 +28,6 @@ const actions = {
             // put token into the localStorage
             localStorage.setItem('token', token);
             axios.defaults.headers.common['Authorization'] = token;
-            console.log(user)
             commit('auth_success', payload);
         }
         return res;
@@ -40,7 +39,6 @@ const actions = {
         if(res.data.success != undefined) {
             commit('register_success');
         }
-
         return res
     },
 
@@ -55,7 +53,7 @@ const actions = {
         await localStorage.removeItem('token');
         commit('logout');
         delete axios.defaults.headers.common['Authorization'];
-        router.push('/');
+        router.push('/login');
         return
     }
 };

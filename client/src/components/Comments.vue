@@ -143,6 +143,11 @@ export default {
       line-height: 18px;
     }
 
+    @include component-size(bigdesktop) {
+      font-size: 26px;
+      line-height: 34px;
+    }
+
     & span {
       color: #858585;
       margin-left: 10px;
@@ -161,6 +166,11 @@ export default {
     @include component-size(tablet) {
       font-size: 20px;
       line-height: 24px;
+    }
+
+    @include component-size(bigdesktop) {
+      font-size: 26px;
+      line-height: 34px;
     }
   }
 }

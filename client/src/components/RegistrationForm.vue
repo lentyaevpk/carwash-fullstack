@@ -104,12 +104,14 @@ export default {
             if (this.equalPasswords) {
                 this.register(user).then(res => {
                     if (res.data.success) {
-                    this.$router.push('/')
+                        this.login(user).then(() => {
+                            this.$router.push('/profile')
+                        })
                     }
                 })
             }
         },
-        ...mapActions(['register'])
+        ...mapActions(['register', 'login'])
     }
 }
 </script>

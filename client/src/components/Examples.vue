@@ -105,6 +105,10 @@ export default {
       font-size: 18px;
     }
 
+    @include component-size(bigdesktop) {
+      font-size: 26px;
+    }
+
     &--active {
       background: linear-gradient(180deg, rgba(13, 52, 255, 0.52) 0%, rgba(255, 255, 255, 0) 100%), #00B2FF;
       color: #fff;
@@ -120,8 +124,8 @@ export default {
     padding: 30px;
 
     & img {
-      width: 70%;
-      height: 70%;
+      width: 50%;
+      height: 50%;
     }
 
     &--active {

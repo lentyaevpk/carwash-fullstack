@@ -12,6 +12,11 @@
       :to="link.to"
       exact-active-class="menu__link--active"
     >{{ link.text }}</router-link>
+    <router-link
+      :class="['menu__link', {'menu__link--white': isScrolled || !isMainPage}]"
+      to="/login"
+      exact-active-class="menu__link--active"
+    >{{ isLoggedIn ? 'Профиль' : 'Войти' }}</router-link>
     <div class="menu__info">
       <div :class="['menu__text', 'menu__text--tel', {'menu__text--white': isScrolled || !isMainPage}]">
         +7 927 548 1406
@@ -21,6 +26,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   name: 'Menu',
   data() {
@@ -31,8 +38,7 @@ export default {
         { to: '/about', text: 'О нас' },
         { to: '/prices', text: 'Цены' },
         { to: '/feedback', text: 'Отзывы' },
-        { to: '/works', text: 'Работы' },
-        { to: '/login', text: 'Войти' },
+        { to: '/works', text: 'Работы' }
       ],
       isScrolled: false
     };
@@ -43,7 +49,8 @@ export default {
   computed: {
     isMainPage() {
       return this.$route.path === '/'
-    }
+    },
+    ...mapGetters(['isLoggedIn'])
   },
   methods: {
     // Метод для изменения цвета меню на главной странице при прокрутке
@@ -56,12 +63,6 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-.router-link-exact-active {
-  color: #fff;
-  background: linear-gradient(180deg, rgba(13, 52, 255, 0.52) 0%, rgba(255, 255, 255, 0) 100%), #00B2FF;
-}
-</style>
 <style lang="scss">
 .menu {
   display: flex;

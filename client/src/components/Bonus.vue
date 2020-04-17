@@ -50,6 +50,11 @@ export default {};
       line-height: 30px;
       color: #D8D8D8;
     }
+
+    @include component-size(bigdesktop) {
+      font-size: 26px;
+      line-height: 36px;
+    }
   }
 
   &__button {
@@ -91,6 +96,10 @@ export default {};
     @include component-size(tablet) {
       font-size: 22px;
     }
+
+    @include component-size(bigdesktop) {
+      font-size: 26px;
+    }
   }
 
   &__image {
@@ -114,6 +123,10 @@ export default {};
 
     @include component-size(tablet) {
       font-size: 20px;
+    }
+
+    @include component-size(bigdesktop) {
+      font-size: 26px;
     }
 
     & p {

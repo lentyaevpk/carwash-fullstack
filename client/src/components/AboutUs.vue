@@ -64,6 +64,11 @@ export default {
       font-size: 20px;
       line-height: 24px;
     }
+
+    @include component-size(bigdesktop) {
+      font-size: 26px;
+      line-height: 36px;
+    }
   }
 }
 </style>

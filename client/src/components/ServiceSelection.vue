@@ -85,7 +85,7 @@ export default {
   }
 
   @include component-size(bigdesktop) {
-    width: 500px;
+    width: 600px;
   }
 
   @include component-size(mp) {
@@ -108,6 +108,12 @@ export default {
       font-size: 24px;
       line-height: 35px;
     }
+
+    @include component-size(bigdesktop) {
+      font-size: 30px;
+      line-height: 35px;
+      padding: 30px;
+    }
   }
 
   &__text {
@@ -118,6 +124,11 @@ export default {
       padding: 10px;
       font-size: 20px;
       line-height: 24px;
+    }
+
+    @include component-size(bigdesktop) {
+      font-size: 26px;
+      padding: 30px;
     }
   }
 
@@ -139,6 +150,12 @@ export default {
     @include component-size(tablet) {
       font-size: 20px;
       line-height: 24px;
+    }
+
+    @include component-size(bigdesktop) {
+      font-size: 26px;
+      padding: 30px;
+      line-height: 36px;
     }
   }
 }

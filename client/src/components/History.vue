@@ -63,6 +63,10 @@ export default {
       font-size: 34px;
     }
 
+    @include component-size(bigdesktop) {
+      font-size: 38px;
+    }
+
     &:before {
       content: '';
       position: absolute;
@@ -84,6 +88,11 @@ export default {
       font-size: 20px;
       line-height: 30px;
       margin-top: 25px;
+    }
+
+    @include component-size(bigdesktop) {
+      font-size: 26px;
+      line-height: 36px;
     }
   }
 }

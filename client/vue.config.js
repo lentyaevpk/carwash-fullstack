@@ -8,23 +8,15 @@ module.exports = {
     configureWebpack: {
         resolve: {
             alias: {
-                '@images': resolve('src/assets/images'),
-                '@fonts': resolve('src/assets/fonts')
+                '@images': resolve('./src/assets/images'),
+                '@fonts': resolve('./src/assets/fonts')
             }
-        },
-        plugins: [
-            new webpack.ProvidePlugin({
-                mapGetters: ['vuex', 'mapGetters'],
-                mapActions: ['vuex', 'mapActions'],
-                mapMutations: ['vuex', 'mapMutations'],
-                mapState: ['vuex', 'mapState']
-            })
-        ]
+        }
     },
     css: {
         loaderOptions: {
             sass: {
-                prependData: '@import "src/scss/_mixins.scss";'
+                prependData: '@import "./src/scss/_mixins.scss";'
             }
         }
     }

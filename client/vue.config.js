@@ -4,7 +4,7 @@ const webpack = require('webpack');
 const resolve = dir => path.join(__dirname, dir);
 
 module.exports = {
-    outputDir: path.resolve(__dirname, '../server/public'),
+    outputDir: path.resolve(__dirname, '../public'),
     configureWebpack: {
         resolve: {
             alias: {
@@ -20,11 +20,4 @@ module.exports = {
             }
         }
     }
-    // devServer: {
-    //     proxy: {
-    //         '/api': {
-    //             target: 'http://localhost:5000'
-    //         }
-    //     }
-    // }
 };

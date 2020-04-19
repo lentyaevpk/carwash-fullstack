@@ -13,6 +13,7 @@ export default {
   position: relative;
   width: 80px;
   height: 80px;
+  padding: 20px 0;
 }
 .lds-roller div {
   animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;

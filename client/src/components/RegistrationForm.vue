@@ -1,5 +1,5 @@
 <template>
-    <form class="login__form" @submit.prevent="registerUser">
+    <form v-if="!sendingReq" class="login__form" @submit.prevent="registerUser">
         <div class="form__group">
             <input
                 id="reg_username"
@@ -71,20 +71,26 @@
         </div>
         <button type="submit" class="login__button button">Регистрация</button>
     </form>
+    <Loader v-else/>
 </template>
 
 <script>
 import { mapActions } from 'vuex';
+import Loader from './Loader'
 
 export default {
     name: 'RegistrationForm',
+    components: {
+        Loader
+    },
     data() {
         return {
             username: '',
             name: '',
             email: '',
             password: '',
-            confirmPassword: ''
+            confirmPassword: '',
+            sendingReq: false
         }
     },
     computed: {
@@ -94,6 +100,7 @@ export default {
     },
     methods: {
         registerUser() {
+            this.sendingReq = true;
             let user = {
                 username: this.username,
                 password: this.password,
@@ -108,6 +115,8 @@ export default {
                             this.$router.push('/profile')
                         })
                     }
+                }).catch(() => {
+                    this.sendingReq = false;
                 })
             }
         },

@@ -1,5 +1,5 @@
 <template>
-    <form class="login__form" @submit.prevent="loginUser">
+    <form v-if="!sendingReq" class="login__form" @submit.prevent="loginUser">
         <div class="form__group">
             <input
                 id="log_username"
@@ -29,34 +29,42 @@
         <p class="login__hint" v-if="showHint">Неверный Логин или Пароль</p>
         <button type="submit" class="login__button button">Войти</button>
     </form>
+    <Loader v-else/>
 </template>
 
 <script>
 import { mapActions } from 'vuex';
+import Loader from './Loader'
 
 export default {
     name: 'LoginForm',
+    components: {
+        Loader
+    },
     data() {
         return {
             username: '',
             password: '',
-            showHint: false
+            showHint: false,
+            sendingReq: false
         }
     },
     methods: {
         loginUser() {
-        let user = {
-            username: this.username,
-            password: this.password
-        };
-        this.login(user)
-            .then(res => {
-                if (res.data.success) {
-                    this.$router.push('/profile');
-                }
-            }).catch(() => {
-                this.showHint = true;
-            })
+            this.sendingReq = true;
+            let user = {
+                username: this.username,
+                password: this.password
+            };
+            this.login(user)
+                .then(res => {
+                    if (res.data.success) {
+                        this.$router.push('/profile');
+                    }
+                }).catch(() => {
+                    this.sendingReq = false;
+                    this.showHint = true;
+                })
         },
         ...mapActions(['login'])
     }

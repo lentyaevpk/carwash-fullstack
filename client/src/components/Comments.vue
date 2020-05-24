@@ -7,9 +7,15 @@
         <li v-for="(post, index) in posts" :key="index" class="post">
           <h2 class="post__title">
             {{ post.name }}
-            <span>{{ `${post.createdAt.getDate()}/${post.createdAt.getMonth()}/${post.createdAt.getFullYear()}` }}</span>
+            <span>{{ `${post.createdAt.getDate()}/${post.createdAt.getMonth() + 1}/${post.createdAt.getFullYear()}` }}</span>
           </h2>
           <p class="post__text">{{ post.text }}</p>
+          <div class="post__likes">
+            <img :src="require(`@images/comments/${post.likes.includes(user._id) ? 'like_active' : 'like'}.png`)" alt="like"  @click="like(post)">
+            <span class="post__like-counter">{{post.likes.length}}</span>
+            <img :src="require(`@images/comments/like.png`)" alt="dislike" style="transform: rotate(180deg)">
+            <span class="post__like-counter">{{post.dislikes.length}}</span>
+          </div>
         </li>
       </ul>
       <p v-else class="post__text">Комментариев пока нет.</p>
@@ -27,8 +33,7 @@
 
 <script>
 import Loader from './Loader'
-import PostService from '../postService'
-import {mapGetters} from 'vuex'
+import {mapGetters, mapActions} from 'vuex'
 
 export default {
   name: 'Posts',
@@ -37,7 +42,6 @@ export default {
   },
   data() {
     return {
-      posts: [],
       error: '',
       text: '',
       isLoading: true
@@ -45,7 +49,7 @@ export default {
   },
   async created() {
     try {
-      this.posts = await PostService.getPosts();
+      await this.getPosts()
     } catch(err) {
       this.error = err.message;
     } finally {
@@ -53,14 +57,25 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['user', 'isLoggedIn'])
+    ...mapGetters(['user', 'isLoggedIn', 'posts']),
   },
   methods: {
     async createPost() {
-      await PostService.insertPost(this.text, this.user.username);
-      this.posts = await PostService.getPosts();
+      let post = {
+        text: this.text,
+        name: this.user.username
+      }
+      await this.insertPost(post)
       this.text = '';
-    }
+    },
+    async like(post) {
+      let data = {
+        postID: post._id,
+        userID: this.user._id
+      }
+      await this.setLike(data)
+    },
+    ...mapActions(['getPosts', 'insertPost', 'setLike'])
   }
 };
 </script>
@@ -172,6 +187,20 @@ export default {
       font-size: 26px;
       line-height: 34px;
     }
+  }
+
+  &__likes {
+    display: flex;
+
+    & img {
+      cursor: pointer;
+    }
+  }
+
+  &__like-counter {
+    color: #858585;
+    padding: 0 10px;
+    font-size: 24px;
   }
 }
 </style>

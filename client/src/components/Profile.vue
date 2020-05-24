@@ -18,13 +18,13 @@ import { mapGetters, mapActions } from 'vuex'
 export default {
     name: 'Profile',
     computed: {
-        ...mapGetters(['user'])
+      ...mapGetters(['user'])
     },
     methods: {
-        ...mapActions(['logout']),
-        logoutUser() {
-            this.logout();
-        }
+      ...mapActions(['logout']),
+      logoutUser() {
+          this.logout();
+      }
     }
 }
 </script>

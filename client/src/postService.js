@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const url = '/api/posts/';
+const url = 'http://localhost:5000/api/posts/';
 
 class PostService {
     // Get post
@@ -8,6 +8,7 @@ class PostService {
         return new Promise(async (resolve, reject) => {
             try {
                 const res = await axios.get(url);
+                console.log(res.data)
                 const data = res.data;
                 resolve(
                     data.map(post => ({

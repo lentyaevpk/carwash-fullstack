@@ -15,9 +15,36 @@ router.post('/', async (req, res) => {
     await posts.insertOne({
         name: req.body.name,
         text: req.body.text,
+        likes: [],
+        dislikes: [],
         createdAt: new Date()
     });
     res.status(201).send();
+})
+
+//Set like
+router.put('/like', async (req, res) => {
+    const posts = await loadPostsCollection()
+    console.log('here 1')
+    if (await posts.findOne(
+        {
+            _id: new mongodb.ObjectID(req.body.postID),
+            likes: req.body.userID
+        }
+    )) {
+        await posts.updateOne(
+            {_id: new mongodb.ObjectID(req.body.postID)},
+            { $pull: { likes: req.body.userID }}
+        )
+        console.log('here 2')
+    } else {
+        await posts.updateOne(
+            {_id: new mongodb.ObjectID(req.body.postID)},
+            { $push: { likes: req.body.userID } }
+        )
+        console.log('here 3')
+    }
+    res.status(200).send()
 })
 
 // Delete posts

@@ -10,6 +10,12 @@
             <span>{{ `${post.createdAt.getDate()}/${post.createdAt.getMonth()}/${post.createdAt.getFullYear()}` }}</span>
           </h2>
           <p class="post__text">{{ post.text }}</p>
+          <div class="post__likes">
+            <img :src="require(`@images/comments/like.png`)" alt="like"  @click="like(post)">
+            <span class="post__like-counter">0</span>
+            <img :src="require(`@images/comments/like.png`)" alt="dislike" style="transform: rotate(180deg)">
+            <span class="post__like-counter">0</span>
+          </div>
         </li>
       </ul>
       <p v-else class="post__text">Комментариев пока нет.</p>
@@ -27,8 +33,8 @@
 
 <script>
 import Loader from './Loader'
-import PostService from '../postService'
-import {mapGetters} from 'vuex'
+// import PostService from '../postService'
+import {mapGetters, mapActions} from 'vuex'
 
 export default {
   name: 'Posts',
@@ -37,30 +43,28 @@ export default {
   },
   data() {
     return {
-      posts: [],
       error: '',
       text: '',
       isLoading: true
     }
   },
   async created() {
-    try {
-      this.posts = await PostService.getPosts();
-    } catch(err) {
-      this.error = err.message;
-    } finally {
-      this.isLoading = false
-    }
+    await this.getPosts()
+    this.isLoading = false
   },
   computed: {
-    ...mapGetters(['user', 'isLoggedIn'])
+    ...mapGetters(['user', 'isLoggedIn', 'posts'])
   },
   methods: {
     async createPost() {
-      await PostService.insertPost(this.text, this.user.username);
-      this.posts = await PostService.getPosts();
-      this.text = '';
-    }
+      let newPost = {
+        name: this.user.username,
+        text: this.text
+      }
+      await this.insertPost(newPost)
+      this.text = ''
+    },
+    ...mapActions(['getPosts', 'insertPost'])
   }
 };
 </script>
@@ -172,6 +176,19 @@ export default {
       font-size: 26px;
       line-height: 34px;
     }
+  }
+
+  &__likes {
+    display: flex;
+    & img {
+      cursor: pointer;
+    }
+  }
+
+  &__like-counter {
+    color: #858585;
+    padding: 0 10px;
+    font-size: 24px;
   }
 }
 </style>

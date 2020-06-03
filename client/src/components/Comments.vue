@@ -4,19 +4,7 @@
     <Loader class="feedback__loader" v-if="isLoading"/>
     <main v-else class="feedback-container">
       <ul v-if="posts.length" class="feedback-container__list">
-        <li v-for="(post, index) in posts" :key="index" class="post">
-          <h2 class="post__title">
-            {{ post.name }}
-            <span>{{ `${post.createdAt.getDate()}/${post.createdAt.getMonth()}/${post.createdAt.getFullYear()}` }}</span>
-          </h2>
-          <p class="post__text">{{ post.text }}</p>
-          <div class="post__likes">
-            <img :src="require(`@images/comments/like.png`)" alt="like"  @click="like(post)">
-            <span class="post__like-counter">0</span>
-            <img :src="require(`@images/comments/like.png`)" alt="dislike" style="transform: rotate(180deg)">
-            <span class="post__like-counter">0</span>
-          </div>
-        </li>
+        <Post v-for="(post, index) in posts" :key="index" :post="post" />
       </ul>
       <p v-else class="post__text">Комментариев пока нет.</p>
       <form v-if="isLoggedIn" class="feedback-container__form form" @submit.prevent="createPost">
@@ -33,13 +21,13 @@
 
 <script>
 import Loader from './Loader'
-// import PostService from '../postService'
 import {mapGetters, mapActions} from 'vuex'
+import Post from './Post'
 
 export default {
   name: 'Posts',
   components: {
-    Loader
+    Loader, Post
   },
   data() {
     return {

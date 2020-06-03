@@ -27,13 +27,9 @@ mongoose.connect(db, {
     console.log(`Unable to connect with the database ${err}`)
 });
 
-const users = require('./routes/api/users');
-
-app.use('/api/users', users);
-
-const posts = require('./routes/api/posts');
-
-app.use('/api/posts', posts);
+app.use('/api/users', require('./routes/api/users'));
+app.use('/api/posts', require('./routes/api/posts'));
+app.use('/api/like', require('./routes/api/like'))
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'public/index.html'));

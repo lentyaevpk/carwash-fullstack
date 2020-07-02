@@ -15,13 +15,13 @@ const getters = {
 
 const actions = {
     async getPosts({commit}) {
-        let res = await axios.get('http://localhost:5000/api/posts')
+        let res = await axios.get('/api/posts')
         const posts = res.data
         commit('get_posts', posts)
     },
 
     async insertPost(ctx, post) {
-        await axios.post('http://localhost:5000/api/posts', post)
+        await axios.post('/api/posts', post)
         ctx.dispatch('getPosts')
     }
 }

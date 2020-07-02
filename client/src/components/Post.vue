@@ -62,7 +62,7 @@ export default {
     },
     methods: {
         getLikes() {
-            axios.post('http://localhost:5000/api/like/getLikes', this.postData)
+            axios.post('/api/like/getLikes', this.postData)
             .then(res => {
                 if (res.data.success) {
                     this.likes = res.data.likes
@@ -72,7 +72,7 @@ export default {
             })
         },
         getDislikes() {
-            axios.post('http://localhost:5000/api/like/getDislikes', this.postData)
+            axios.post('/api/like/getDislikes', this.postData)
             .then(res => {
                 if (res.data.success) {
                     this.dislikes = res.data.dislikes
@@ -83,7 +83,7 @@ export default {
         },
         likePost() {
             if (this.isLoggedIn) {
-                axios.post(`http://localhost:5000/api/like/${ this.isLikedByUser ? 'un' : 'up' }Like`, this.postData)
+                axios.post(`/api/like/${ this.isLikedByUser ? 'un' : 'up' }Like`, this.postData)
                 .then(res => {
                     if (res.data.success) {
                         this.getLikes()
@@ -98,7 +98,7 @@ export default {
         },
         dislikePost() {
             if (this.isLoggedIn) {
-                axios.post(`http://localhost:5000/api/like/${ this.isDislikedByUser ? 'un' : 'up' }Dislike`, this.postData)
+                axios.post(`/api/like/${ this.isDislikedByUser ? 'un' : 'up' }Dislike`, this.postData)
                 .then(res => {
                     if (res.data.success) {
                         this.getDislikes()
